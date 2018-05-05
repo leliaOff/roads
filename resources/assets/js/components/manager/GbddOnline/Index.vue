@@ -6,7 +6,7 @@
 </template>
 
 <script>
-
+    // POST: /api/gibddonline/list предать user_id: 1
     import Create    from './Create.vue';
 
     export default {

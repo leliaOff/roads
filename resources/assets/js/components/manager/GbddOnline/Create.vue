@@ -72,14 +72,15 @@
         methods: {
 
             create() {
-                
+                let files = JSON.stringify(this.item.files);
                 //Сохраняем заметку о новой проблеме на дороге
-                // axios.post('createGbddOnline', {
-                //     coordinates : this.coordinates,
-                //     text        : this.item.text,
-                //     number      : this.item.number,
-                //     date        : this.item.date,
-                //     files       : this.item.files,
+                // axios.post('/api/gibddonline/create', {
+                //     lat         : this.coordinates[0],
+                //     lon         : this.coordinates[1],
+                //     description        : this.item.text,
+                //     transport_number      : this.item.number,
+                //     offence_registered_at        : this.item.date,
+                //     files_offence       : files,
                 // }).then(response => {
 
                     //Очищаем данные
