@@ -66,10 +66,11 @@
             create() {
                 
                 //Сохраняем заметку о новой проблеме на дороге
-                // axios.post('createActiveCitizen', {
-                //     coordinates : this.coordinates,
+                // axios.post('/api/activecitizen/create', {
+                //     lat         : this.coordinates[0],
+                //     lon         : this.coordinates[1],
                 //     type        : this.item.type,
-                //     text        : this.item.text
+                //     description        : this.item.text
                 // }).then(response => {
 
                     //Очищаем данные

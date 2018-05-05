@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use DateTime;
 
 class FilesController extends Controller
@@ -18,7 +20,7 @@ class FilesController extends Controller
         
         foreach($request['files'] as $file) {
 
-            $file 		= $file->store('files');
+            $file 		= $file->store('public/files');
             $filename 	= Storage::url($file);
             $result[]   = $filename;
         }

@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request){
     return $request->user();
 });
+
+Route::get('/activecitizen/list','ActiveCitizenController@list');
+Route::post('/activecitizen/create','ActiveCitizenController@create');
+
+Route::post('/gibddonline/list','GidbbOnlineController@list');
+Route::post('/gibddonline/create','GidbbOnlineController@create');
+
+

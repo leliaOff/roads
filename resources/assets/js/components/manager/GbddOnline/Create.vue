@@ -33,10 +33,7 @@
                         <div class="row">
                             <div class="col-sm-12 clearfix"><label class="input-title">Фото и/или видео нарушения:</label></div>
                             <div class="col-sm-12 clearfix">
-                                <div class="row" v-for="(file, i) in item.files" :key="i">
-                                    <div class="col-sm-10 clearfix">{{ file }}</div>
-                                    <div class="col-sm-2 clearfix"><button class="btn btn-danger" @click="deleteFile(i)">Удалить</button></div>
-                                </div>
+                                <files-form v-model="item.files" v-on:changeFiles="onChangeFiles"></files-form>
                             </div>
                         </div>
 
@@ -53,6 +50,8 @@
 </template>
 
 <script>
+
+    import UploadsFiles from '../../services/UploadsFiles.vue';
 
     export default {
 
@@ -73,11 +72,15 @@
         methods: {
 
             create() {
-                
+                let files = JSON.stringify(this.item.files);
                 //Сохраняем заметку о новой проблеме на дороге
-                // axios.post('createGbddOnline', {
-                //     coordinates : this.coordinates,
-                //     text        : this.item.text
+                // axios.post('/api/gibddonline/create', {
+                //     lat         : this.coordinates[0],
+                //     lon         : this.coordinates[1],
+                //     description        : this.item.text,
+                //     transport_number      : this.item.number,
+                //     offence_registered_at        : this.item.date,
+                //     files_offence       : files,
                 // }).then(response => {
 
                     //Очищаем данные
@@ -133,10 +136,14 @@
                 
             },
 
-            deleteFile(i) {
-                this.item.files.splice(i, 1);
-            },
+            onChangeFiles(files) {
+                this.item.files = files;
+            }
 
+        },
+
+        components: {
+            FilesForm: UploadsFiles,
         },
 
     }

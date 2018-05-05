@@ -97,7 +97,7 @@
 
                 /* Сами геоэлементы */
                 elementsList: [],
-                
+
                 mapSetting: {}
             }
         },
