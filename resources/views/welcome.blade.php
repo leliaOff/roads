@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/ol.css') }}">
 
     <title>Безопасные дороги</title>
-    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link rel="icon" type="image/png" href="favicon.png" />
     
 </head>
 <body>

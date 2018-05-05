@@ -3,7 +3,7 @@ import router from './routes';
 import { store } from './components/store/store';
 
 import Map from './components/map/Map.vue';
-Vue.component('map-component', Map);
+Vue.component('ol-map', Map);
 
 let vueInstance = new Vue({
     el      : '#app',
