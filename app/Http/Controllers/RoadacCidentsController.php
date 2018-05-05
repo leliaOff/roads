@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RoadAccidents;
+use App\Models\RoadEmergencies;
 use App\Models\RoadWorks;
 
 class RoadacCidentsController extends Controller
@@ -11,7 +12,7 @@ class RoadacCidentsController extends Controller
 
     public function getRoadWorks() {
         
-        $data = RoadWorks::orderBy('id')->limit(5)->get();
+        $data = RoadWorks::orderBy('id')->get();
         $array = [];
         for ($i = 0; $i < count($data); $i++) {
             $array[] = [
@@ -37,7 +38,7 @@ class RoadacCidentsController extends Controller
     }
 
     public function getRoadAccidents() {
-        $data = RoadAccidents::orderBy('id')->limit(5)->get();
+        $data = RoadAccidents::orderBy('id')->get();
         $array = [];
         for ($i = 0; $i < count($data); $i++) {
             $array[] = [
@@ -46,6 +47,21 @@ class RoadacCidentsController extends Controller
                 'type' => 'point',
                 'name' => $data[$i]['crash_type'],
                 'layer' => 'layer1'
+            ];
+        }
+        return $array;
+    }
+
+    public function getRoadEmergencies() {
+        $data = RoadEmergencies::orderBy('id')->get();
+        $array = [];
+        for ($i = 0; $i < count($data); $i++) {
+            $array[] = [
+                'id' => $data[$i]['id'],
+                'coordinates' => [(float)$data[$i]['lon'],  (float)$data[$i]['lat']],
+                'type' => 'point',
+                'name' => $data[$i]['description'],
+                'layer' => 'layer2'
             ];
         }
         return $array;
