@@ -113,7 +113,7 @@
             init() {
 
                 let mapSetting = {
-                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [48.036666, 46.348826] : this.mapSetting.center,
+                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [78.104534, 65.970312] : [78.104534, 65.970312],
                     zoom:   (this.mapSetting == undefined || this.mapSetting.zoom == undefined)   ? 16                     : this.mapSetting.zoom,
                 };
                 

@@ -11,10 +11,12 @@
         data() {
 
             let layerName = [
-                'layer1', 'layer2'
+                'layer1', 'layer2', 'layer3'
             ];
 
             return {
+
+                data: [],
 
                 //Название слоёв карты
                 layerName: layerName,
@@ -68,6 +70,30 @@
                                 angle: 0
                             }
                         }
+                    },
+                    layer3: {
+                        name: layerName[2],
+                        style: {
+                            fill: {
+                                color: 'rgba(255, 0, 0, 0.1)'
+                            },
+                            stroke: {
+                                color: 'rgb(255, 0, 0)',
+                                width: 1
+                            },
+                            shape: {
+                                fill: {
+                                    color: 'rgba(255, 0, 0, 0.1)'
+                                },
+                                stroke: {
+                                    color: 'rgb(255, 0, 0)',
+                                    width: 1
+                                },
+                                points: 4,
+                                radius: 10,
+                                angle: 0
+                            }
+                        }
                     }
                 }, 
 
@@ -94,10 +120,26 @@
                         name: 'Элемент 3',
                         layer: layerName[1]
                     },
+                    {
+                        id: 5,
+                        coordinates: [[78.104434, 65.970212],[78.104634, 65.970412],[78.08259, 65.973831],[78.08059, 65.973631]],
+                        type: 'MultiPolygon',
+                        name: 'Элемент 5',
+                        layer: layerName[2]
+                    },
                 ]
 
             }
         },
+
+        created() {
+            let self = this;
+            axios.get('./get_data')
+            .then(function (response) {
+                self.data = response.data;
+                // self.elementsList = 
+            });
+        }
 
     }
 </script>
