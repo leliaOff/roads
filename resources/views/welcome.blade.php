@@ -15,6 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ URL::asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ URL::asset('css/vue2-scrollbar.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/ol.css') }}">
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
