@@ -50904,6 +50904,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50916,7 +50926,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             item: {
                 text: '',
                 number: '',
-                date: ''
+                date: '',
+                files: []
             }
         };
     },
@@ -50957,7 +50968,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.item.text = '';
             this.item.number = '';
             this.item.date = '';
+            this.item.files = [];
             this.$store.dispatch('togleMapMode', { mode: 'select' });
+        },
+        uploadFile: function uploadFile() {
+            var _this = this;
+
+            var url = window.baseurl + '/parent/user/upload';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            data.append('file', document.getElementById('avatar').files[0]);
+
+            this.validation = { status: "", error: "" };
+
+            axios.post(url, data, config).then(function (response) {
+                if (response.data.status == 'success') {
+                    _this.avatar = response.data.result;
+                } else {
+                    _this.validation = response.data;
+                }
+            });
+        },
+        deleteFile: function deleteFile(i) {
+            this.item.files.splice(i, 1);
         }
     }
 
@@ -51051,7 +51085,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.item, "text", $event.target.value)
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 clearfix"
+  }, _vm._l((_vm.item.files), function(file, i) {
+    return _c('div', {
+      key: i,
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-10 clearfix"
+    }, [_vm._v(_vm._s(file))]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2 clearfix"
+    }, [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [_vm._v("Удалить")])])])
+  }))])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-primary",
@@ -51102,6 +51156,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Текст заявления:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-12 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Фото и/или видео нарушения:")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

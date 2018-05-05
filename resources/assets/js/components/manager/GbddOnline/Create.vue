@@ -30,6 +30,16 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-sm-12 clearfix"><label class="input-title">Фото и/или видео нарушения:</label></div>
+                            <div class="col-sm-12 clearfix">
+                                <div class="row" v-for="(file, i) in item.files" :key="i">
+                                    <div class="col-sm-10 clearfix">{{ file }}</div>
+                                    <div class="col-sm-2 clearfix"><button class="btn btn-danger" @click="deleteFile(i)">Удалить</button></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" @click="create()">Создать</button>
@@ -55,6 +65,7 @@
                     text    : '',
                     number  : '',
                     date    : '',
+                    files   : []
                 }
             }
         },
@@ -98,8 +109,33 @@
                 this.item.text = '';
                 this.item.number = '';
                 this.item.date = '';
+                this.item.files = [];
                 this.$store.dispatch('togleMapMode', {mode: 'select'});
-            }
+            },
+
+            uploadFile() {
+                
+				var url = window.baseurl + '/parent/user/upload';
+				const config = { headers: { 'content-type': 'multipart/form-data' } };
+				
+				let data = new FormData();
+				data.append('file', document.getElementById('avatar').files[0]);
+
+				this.validation= { status:	"", error: "" };
+
+				axios.post(url, data, config).then((response) => {
+					if(response.data.status == 'success') {
+						this.avatar = response.data.result;
+					} else {
+						this.validation = response.data;
+					}
+                });
+                
+            },
+
+            deleteFile(i) {
+                this.item.files.splice(i, 1);
+            },
 
         },
 
