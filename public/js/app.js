@@ -14630,7 +14630,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-Vue.component('map-component', __WEBPACK_IMPORTED_MODULE_3__components_map_Map_vue___default.a);
+Vue.component('ol-map', __WEBPACK_IMPORTED_MODULE_3__components_map_Map_vue___default.a);
 
 var vueInstance = new Vue({
     el: '#app',
@@ -15490,15 +15490,10 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_MapComponent_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_MapComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__map_MapComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_Manager_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_Manager_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__manager_Manager_vue__);
 //
 //
 //
@@ -15507,10 +15502,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+
+    components: {
+        MapComponent: __WEBPACK_IMPORTED_MODULE_0__map_MapComponent_vue___default.a,
+        ManagerComponent: __WEBPACK_IMPORTED_MODULE_1__manager_Manager_vue___default.a
     }
+
 });
 
 /***/ }),
@@ -16066,12 +16068,21 @@ var AxiosConfigService = function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_map_map__ = __webpack_require__(64);
+
+
 
 
 var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
+
     state: {
         datatableSearch: ''
+    },
+
+    modules: {
+        map: __WEBPACK_IMPORTED_MODULE_1__modules_map_map__["a" /* default */]
     }
+
 });
 
 /***/ }),
@@ -46315,22 +46326,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
-}]}
+    staticClass: "wrapper"
+  }, [_c('map-component'), _vm._v(" "), _c('manager-component')], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -49606,6 +49605,580 @@ module.exports = function(module) {
 __webpack_require__(13);
 module.exports = __webpack_require__(14);
 
+
+/***/ }),
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(57),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\map\\MapComponent.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] MapComponent.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7da24a62", Component.options)
+  } else {
+    hotAPI.reload("data-v-7da24a62", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+
+        var layerName = ['layer1', 'layer2'];
+
+        return {
+
+            //Название слоёв карты
+            layerName: layerName,
+
+            /* Список слоев - меняется при изменении стиля */
+            layersList: {
+                layer1: {
+                    name: layerName[0],
+                    style: {
+                        fill: {
+                            color: '#24f636'
+                        },
+                        stroke: {
+                            color: '#24f636',
+                            width: 1
+                        },
+                        shape: {
+                            fill: {
+                                color: '#24f636'
+                            },
+                            stroke: {
+                                color: '#24f636',
+                                width: 1
+                            },
+                            points: 4,
+                            radius: 10,
+                            angle: 0
+                        }
+                    }
+                },
+                layer2: {
+                    name: layerName[1],
+                    style: {
+                        fill: {
+                            color: '#f62496'
+                        },
+                        stroke: {
+                            color: '#f62496',
+                            width: 1
+                        },
+                        shape: {
+                            fill: {
+                                color: '#f62496'
+                            },
+                            stroke: {
+                                color: '#f62496',
+                                width: 1
+                            },
+                            points: 4,
+                            radius: 10,
+                            angle: 0
+                        }
+                    }
+                }
+            },
+
+            /* Сами геоэлементы */
+            elementsList: [{
+                id: 1,
+                coordinates: [48.036666, 46.348826],
+                type: 'point',
+                name: 'Элемент 1',
+                layer: layerName[0]
+            }, {
+                id: 2,
+                coordinates: [48.035666, 46.349826],
+                type: 'point',
+                name: 'Элемент 2',
+                layer: layerName[0]
+            }, {
+                id: 3,
+                coordinates: [48.037666, 46.347826],
+                type: 'point',
+                name: 'Элемент 3',
+                layer: layerName[1]
+            }]
+
+        };
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('ol-map', {
+    attrs: {
+      "layersList": _vm.layersList,
+      "elementsList": _vm.elementsList
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7da24a62", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Profile_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            isLogin: true
+        };
+    },
+
+
+    methods: {
+        login: function login() {
+            this.isLogin = true;
+        },
+        logout: function logout() {
+            this.isLogin = false;
+        }
+    },
+
+    components: {
+        LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a,
+        LogoutComponent: __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default.a,
+        ProfileComponent: __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default.a
+    }
+
+});
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(58),
+  /* template */
+  __webpack_require__(60),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Manager.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Manager.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a2d0ac0", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a2d0ac0", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "manager"
+    }
+  }, [(_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
+    on: {
+      "logout": _vm.logout
+    }
+  }) : _c('login-component', {
+    on: {
+      "login": _vm.login
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6a2d0ac0", module.exports)
+  }
+}
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        login: function login() {
+            this.$emit('login');
+        }
+    }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(61),
+  /* template */
+  __webpack_require__(63),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Login.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Login.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-edb3d1c8", Component.options)
+  } else {
+    hotAPI.reload("data-v-edb3d1c8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "login",
+    on: {
+      "click": _vm.login
+    }
+  }, [_vm._v("вход")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-edb3d1c8", module.exports)
+  }
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* Управление переменными для работы с картой */
+var state = {
+    map: false, //Сама карта
+    zoom: 11 //Зум
+};
+
+var mutations = {
+
+    /* Обновление размера карты - необходимо, когда карта в диалоговом окне и оно открывается */
+    resize: function resize(state) {
+
+        if (state.map != false) {
+            state.map.updateSize();
+        }
+    }
+
+};
+
+var actions = {
+
+    /* Обновление размера карты - необходимо, когда карта в диалоговом окне и оно открывается */
+    mapUpdateResize: function mapUpdateResize(context) {
+        context.commit('resize');
+    }
+
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    state: state,
+    mutations: mutations,
+    actions: actions
+
+    /* кластеризация: http://openlayers.org/en/latest/examples/earthquake-clusters.html?q=style */
+
+});
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(66),
+  /* template */
+  __webpack_require__(67),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Profile.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-59acd2c8", Component.options)
+  } else {
+    hotAPI.reload("data-v-59acd2c8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            user: {
+                firstname: 'Алёна',
+                middlename: 'Игоревна',
+                lastname: 'Артамоненко',
+                image: './images/woman.jpg'
+            }
+        };
+    },
+
+
+    computed: {
+        fullName: function fullName() {
+            return this.user.lastname + ' ' + this.user.firstname + ' ' + this.user.middlename;
+        }
+    }
+
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "profile"
+  }, [_c('div', [_c('div', {
+    staticClass: "profile-image"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.user.image,
+      "alt": _vm.fullName,
+      "title": _vm.fullName
+    }
+  })]), _c('div', {
+    staticClass: "profile-data"
+  }, [_c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.lastname))]), _vm._v(" "), _c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.firstname))]), _vm._v(" "), _c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.middlename))])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-59acd2c8", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        logout: function logout() {
+            this.$emit('logout');
+        }
+    }
+});
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(68),
+  /* template */
+  __webpack_require__(70),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Logout.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Logout.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2ea45632", Component.options)
+  } else {
+    hotAPI.reload("data-v-2ea45632", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "login",
+    on: {
+      "click": _vm.logout
+    }
+  }, [_vm._v("выход")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2ea45632", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
