@@ -5,6 +5,8 @@
 
         <div class="cell" v-if="isLogin"><active-citizen></active-citizen></div><!--
         --><div class="cell" v-if="isLogin"><gbdd-online></gbdd-online></div>
+
+        <layers-list v-if="isLogin"></layers-list>
         
         <logout-component v-if="isLogin" v-on:logout="logout"></logout-component>
         <login-component v-else v-on:login="login"></login-component>
@@ -17,8 +19,9 @@
     import Login    from './Login.vue';
     import Logout   from './Logout.vue';
     import Profile  from './Profile.vue';
+    import LayersList     from './LayersList.vue';
     import ActiveCitizen  from './ActiveCitizen/Index.vue';
-    import GbddOnline     from './GbddOnline/Index.vue';
+    import GbddOnline     from './GbddOnline/Index.vue';    
 
     export default {
 
@@ -44,8 +47,9 @@
             LoginComponent      : Login,
             LogoutComponent     : Logout,
             ProfileComponent    : Profile,
+            LayersList          : LayersList,
             ActiveCitizen       : ActiveCitizen,
-            GbddOnline          : GbddOnline
+            GbddOnline          : GbddOnline,
         },
 
     }
