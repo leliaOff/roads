@@ -15,5 +15,3 @@ import AxiosConfigService from './components/services/requests/AxiosConfigServic
 window.enableAxiosInterceptor = AxiosConfigService;
 AxiosConfigService.axiosInterceptor(vueInstance);
 window.vueInstance = vueInstance;
-
-

@@ -7728,29 +7728,6 @@ button.btn {
   box-sizing: border-box;
 }
 
-.notifications {
-  padding: 10px;
-}
-
-.notifications .notification-wrapper {
-  -ms-box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.5);
-}
-
-.notifications .vue-notification {
-  font-size: 14px;
-  margin: 0;
-  color: #333333;
-  background: #fcfcfe;
-  line-height: 1.5;
-  border-left: 5px solid #333333;
-}
-
-.notifications .notification-title {
-  font-weight: 400;
-  line-height: 2;
-}
-
 #map {
   width: 100%;
   height: 100vh;
@@ -7850,4 +7827,31 @@ button.btn {
   margin: 0 0 0 -50px;
   font-size: 18px;
   padding: 5px;
+}
+
+.file-form input.files {
+  display: none;
+}
+
+.file-form .add-file {
+  width: 100%;
+}
+
+.notifications .notification-wrapper {
+  -ms-box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.5);
+}
+
+.notifications .vue-notification {
+  font-size: 14px;
+  margin: 5px;
+  color: #333333;
+  background: #fcfcfe;
+  line-height: 1.5;
+  border-left: 5px solid #333333;
+}
+
+.notifications .notification-title {
+  font-weight: 400;
+  line-height: 2;
 }

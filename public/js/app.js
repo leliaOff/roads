@@ -50860,6 +50860,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_UploadsFiles_vue__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_UploadsFiles_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__services_UploadsFiles_vue__);
 //
 //
 //
@@ -50911,9 +50913,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50939,7 +50940,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Сохраняем заметку о новой проблеме на дороге
             // axios.post('createGbddOnline', {
             //     coordinates : this.coordinates,
-            //     text        : this.item.text
+            //     text        : this.item.text,
+            //     number      : this.item.number,
+            //     date        : this.item.date,
+            //     files       : this.item.files,
             // }).then(response => {
 
             //Очищаем данные
@@ -50990,9 +50994,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        deleteFile: function deleteFile(i) {
-            this.item.files.splice(i, 1);
+        onChangeFiles: function onChangeFiles(files) {
+            this.item.files = files;
         }
+    },
+
+    components: {
+        FilesForm: __WEBPACK_IMPORTED_MODULE_0__services_UploadsFiles_vue___default.a
     }
 
 });
@@ -51089,23 +51097,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_vm._m(4), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 clearfix"
-  }, _vm._l((_vm.item.files), function(file, i) {
-    return _c('div', {
-      key: i,
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col-sm-10 clearfix"
-    }, [_vm._v(_vm._s(file))]), _vm._v(" "), _c('div', {
-      staticClass: "col-sm-2 clearfix"
-    }, [_c('button', {
-      staticClass: "btn btn-danger",
-      on: {
-        "click": function($event) {
-          _vm.deleteFile(i)
-        }
-      }
-    }, [_vm._v("Удалить")])])])
-  }))])]), _vm._v(" "), _c('div', {
+  }, [_c('files-form', {
+    on: {
+      "changeFiles": _vm.onChangeFiles
+    },
+    model: {
+      value: (_vm.item.files),
+      callback: function($$v) {
+        _vm.$set(_vm.item, "files", $$v)
+      },
+      expression: "item.files"
+    }
+  })], 1)])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-primary",
@@ -51168,6 +51171,166 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-aa06b2a0", module.exports)
+  }
+}
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['value'],
+
+    data: function data() {
+        return {
+            files: this.value
+        };
+    },
+
+
+    watch: {
+        files: function files() {
+            this.value = Object.assign({}, this.files);
+        }
+    },
+
+    methods: {
+        selectFiles: function selectFiles() {
+            this.$el.querySelector('input.files').click();
+        },
+        uploadFiles: function uploadFiles() {
+            var _this = this;
+
+            var files = this.$el.querySelector('input.files').files;
+
+            var url = window.baseurl + 'uploads';
+            var config = { headers: { 'content-type': 'multipart/form-data' } };
+
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('files[]', files[i]);
+            }
+
+            axios.post(url, data, config).then(function (response) {
+
+                $.each(response.data, function (i, value) {
+                    _this.files.push(value);
+                });
+
+                _this.$emit('changeFiles', _this.files);
+            }).catch(function (error) {
+                // ...
+            });
+        },
+        getFileName: function getFileName(filename) {
+            var filenameArray = filename.split('/');
+            return filenameArray[filenameArray.length - 1];
+        },
+        deleteFile: function deleteFile(i) {
+            this.files.splice(i, 1);
+            this.$emit('changeFiles', this.files);
+        }
+    }
+});
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(83),
+  /* template */
+  __webpack_require__(85),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\services\\UploadsFiles.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] UploadsFiles.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2e01ed6b", Component.options)
+  } else {
+    hotAPI.reload("data-v-2e01ed6b", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "file-form"
+  }, [_vm._l((_vm.files), function(file, i) {
+    return _c('div', {
+      key: i,
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-10 clearfix"
+    }, [_vm._v(_vm._s(_vm.getFileName(file)))]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2 clearfix"
+    }, [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteFile(i)
+        }
+      }
+    }, [_vm._v("Удалить")])])])
+  }), _c('button', {
+    staticClass: "add-file btn btn-success",
+    attrs: {
+      "title": "Выбрать фото или видео"
+    },
+    on: {
+      "click": _vm.selectFiles
+    }
+  }, [_vm._v("Добавить фото и/или видео")]), _vm._v(" "), _c('input', {
+    staticClass: "files",
+    attrs: {
+      "type": "file",
+      "multiple": "true",
+      "accept": "image/jpeg,image/png,image/gif,video/mp4,video/x-m4v,video/msvideo,video/avi,video/x-msvideo,video/*"
+    },
+    on: {
+      "change": _vm.uploadFiles
+    }
+  })], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2e01ed6b", module.exports)
   }
 }
 
