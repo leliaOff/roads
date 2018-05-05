@@ -49772,18 +49772,47 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Profile_vue__);
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            isLogin: true
+        };
+    },
+
+
+    methods: {
+        login: function login() {
+            this.isLogin = true;
+        },
+        logout: function logout() {
+            this.isLogin = false;
+        }
+    },
 
     components: {
-        LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a
+        LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a,
+        LogoutComponent: __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default.a,
+        ProfileComponent: __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default.a
     }
 
 });
@@ -49831,7 +49860,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "manager"
     }
-  }, [_c('login-component')], 1)
+  }, [(_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
+    on: {
+      "logout": _vm.logout
+    }
+  }) : _c('login-component', {
+    on: {
+      "login": _vm.login
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49853,26 +49890,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            isLogin: false
-        };
-    },
-
-
     methods: {
         login: function login() {
-            this.isLogin = true;
-        },
-        logout: function logout() {
-            this.isLogin = false;
+            this.$emit('login');
         }
     }
 });
@@ -49916,17 +49938,12 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [(_vm.isLogin) ? _c('div', [_c('button', {
-    staticClass: "login",
-    on: {
-      "click": _vm.logout
-    }
-  }, [_vm._v("выход")])]) : _c('div', [_c('button', {
+  return _c('div', [_c('button', {
     staticClass: "login",
     on: {
       "click": _vm.login
     }
-  }, [_vm._v("вход")])])])
+  }, [_vm._v("вход")])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49976,6 +49993,192 @@ var actions = {
     /* кластеризация: http://openlayers.org/en/latest/examples/earthquake-clusters.html?q=style */
 
 });
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(66),
+  /* template */
+  __webpack_require__(67),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Profile.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-59acd2c8", Component.options)
+  } else {
+    hotAPI.reload("data-v-59acd2c8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            user: {
+                firstname: 'Алёна',
+                middlename: 'Игоревна',
+                lastname: 'Артамоненко',
+                image: './images/woman.jpg'
+            }
+        };
+    },
+
+
+    computed: {
+        fullName: function fullName() {
+            return this.user.lastname + ' ' + this.user.firstname + ' ' + this.user.middlename;
+        }
+    }
+
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "profile"
+  }, [_c('div', [_c('div', {
+    staticClass: "profile-image"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.user.image,
+      "alt": _vm.fullName,
+      "title": _vm.fullName
+    }
+  })]), _c('div', {
+    staticClass: "profile-data"
+  }, [_c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.lastname))]), _vm._v(" "), _c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.firstname))]), _vm._v(" "), _c('div', {
+    staticClass: "profile-data-item"
+  }, [_vm._v(_vm._s(_vm.user.middlename))])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-59acd2c8", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        logout: function logout() {
+            this.$emit('logout');
+        }
+    }
+});
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(68),
+  /* template */
+  __webpack_require__(70),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\Logout.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Logout.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2ea45632", Component.options)
+  } else {
+    hotAPI.reload("data-v-2ea45632", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "login",
+    on: {
+      "click": _vm.logout
+    }
+  }, [_vm._v("выход")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2ea45632", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -1,29 +1,15 @@
 <template>
     <div>
-        <div v-if="isLogin">
-            <button class="login" @click="logout">выход</button>
-        </div>
-        <div v-else>
-            <button class="login" @click="login">вход</button>
-        </div>
+        <button class="login" @click="login">вход</button>
     </div>
 </template>
 
 <script>
     export default {
-        data() {
-            return {
-                isLogin: false
-            }
-        },
-
         methods: {
             login() {
-                this.isLogin = true;
+                this.$emit('login');
             },
-            logout() {
-                this.isLogin = false;
-            }
         }
     }
 </script>
