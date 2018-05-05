@@ -15998,6 +15998,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -16010,7 +16022,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            isLogin: true
+            isLogin: true,
+            showMenu: $(document).width() > 640
         };
     },
 
@@ -16031,8 +16044,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         LayersList: __WEBPACK_IMPORTED_MODULE_3__LayersList_vue___default.a,
         ActiveCitizen: __WEBPACK_IMPORTED_MODULE_4__ActiveCitizen_Index_vue___default.a,
         GbddOnline: __WEBPACK_IMPORTED_MODULE_5__GbddOnline_Index_vue___default.a
-    }
+    },
 
+    mounted: function mounted() {
+        var _this = this;
+
+        $(window).resize(function () {
+            _this.showMenu = $(document).width() > 640;
+        });
+    }
 });
 
 /***/ }),
@@ -47833,15 +47853,39 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('vue-scrollbar', {
+    ref: "mainScrollbar",
+    staticClass: "scrollbar"
+  }, [_c('transition', {
+    attrs: {
+      "name": "right"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showMenu),
+      expression: "showMenu"
+    }],
     attrs: {
       "id": "manager"
     }
-  }, [(_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', {
+  }, [_c('button', {
+    attrs: {
+      "id": "menu-hide"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showMenu = false
+      }
+    }
+  }, [_vm._v("свернуть меню")]), _vm._v(" "), (_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', {
     staticClass: "cell"
   }, [_c('active-citizen')], 1) : _vm._e(), (_vm.isLogin) ? _c('div', {
     staticClass: "cell"
-  }, [_c('gbdd-online')], 1) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('layers-list') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
+  }, [_c('gbdd-online')], 1) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('layers-list') : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "actions"
+  }, [(_vm.isLogin) ? _c('logout-component', {
     on: {
       "logout": _vm.logout
     }
@@ -47849,7 +47893,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "login": _vm.login
     }
-  })], 1)
+  })], 1)], 1)])], 1), _vm._v(" "), _c('button', {
+    attrs: {
+      "id": "menu-show"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showMenu = true
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-bars"
+  })])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -51392,6 +51447,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 layer1: {
                     title: 'Открытые данные: дорожно-транспортные происшествия',
                     description: 'Дорожно-транспортные происшествия на автодорогах федерального, регионального и межмуниципального значения',
+                    checked: true
+                },
+                layer2: {
+                    title: 'Открытые данные: чрезвычайные происшествия',
+                    description: 'Чрезвычайные происшествия на автомобильных дорогах федерального, регионального и межмуниципального значения',
                     checked: true
                 },
                 layer3: {

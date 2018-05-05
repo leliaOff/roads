@@ -7657,6 +7657,7 @@ body, html {
   background: #fcfcfe;
   width: 100%;
   height: 100vh;
+  min-width: 320px;
   overflow: hidden;
   font-family: 'PT Sans', sans-serif;
 }
@@ -7853,12 +7854,12 @@ button.btn {
   cursor: pointer;
 }
 
-#manager .login {
+#manager .actions {
+  text-align: center;
+}
+
+#manager .actions .login {
   width: 100px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  margin: 0 0 0 -50px;
   font-size: 18px;
   padding: 5px;
 }
@@ -7869,6 +7870,34 @@ button.btn {
 
 .file-form .add-file {
   width: 100%;
+}
+
+.scrollbar {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+#menu-show {
+  display: none;
+  height: 51px;
+  right: 9px;
+  position: fixed;
+  top: 9px;
+  color: #fcfcfe;
+  width: 51px;
+  border: none;
+  background: #8399c5;
+}
+
+#menu-hide {
+  display: none;
+  width: 100%;
+  height: 60px;
+  background: none;
+  color: #fcfcfe;
+  border: none;
+  border-bottom: 1px solid;
+  margin: 0 0 10px;
 }
 
 .notifications .notification-wrapper {
@@ -7888,4 +7917,17 @@ button.btn {
 .notifications .notification-title {
   font-weight: 400;
   line-height: 2;
+}
+
+.right-enter-active, .right-leave-active {
+  transition: right 1s;
+}
+
+@media only screen and (max-width: 640px) {
+  #menu-show {
+    display: block;
+  }
+  #menu-hide {
+    display: block;
+  }
 }

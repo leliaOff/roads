@@ -50,6 +50,7 @@ body, html {
     background: $white;
     width: 100%;
     height: 100vh;
+    min-width: 320px;
     overflow: hidden;
     font-family: 'PT Sans', sans-serif;
 }
@@ -245,15 +246,19 @@ button {
         }
     }
 
-    .login {
-        width: 100px;
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        margin: 0 0 0 -50px;
-        font-size: 18px;
-        padding: 5px;
-    }
+    .actions {
+        text-align: center;
+
+        .login {
+            width: 100px;
+            //position: absolute;
+            //bottom: 20px;
+            //left: 50%;
+            //margin: 0 0 0 -50px;
+            font-size: 18px;
+            padding: 5px;
+        }
+    }    
 }
 
 .file-form {
@@ -267,6 +272,40 @@ button {
     .add-file {
         width: 100%;
     }
+}
+
+.scrollbar {
+
+    height: 100vh !important;
+    overflow: hidden !important;
+
+    .vue-scrollbar__scrollbar-vertical .scrollbar,
+    .vue-scrollbar__scrollbar-horizontal .scrollbar {
+        //background: $index-blue;
+    }
+}
+
+#menu-show {
+    display: none;
+    height: 51px;
+    right: 9px;
+    position: fixed;
+    top: 9px;
+    color: $white;
+    width: 51px;
+    border: none;
+    background: $manager-bg;
+}
+
+#menu-hide {
+    display: none;
+    width: 100%;
+    height: 60px;
+    background: none;
+    color: #fcfcfe;
+    border: none;
+    border-bottom: 1px solid;
+    margin: 0 0 10px;
 }
 
 
@@ -290,3 +329,9 @@ button {
         line-height: 2;
     }
 }
+
+.right-enter-active, .right-leave-active {
+    transition: right 1s;
+}
+
+@import "repsonsive";
