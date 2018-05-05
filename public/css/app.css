@@ -7658,6 +7658,7 @@ body, html {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  font-family: 'PT Sans', sans-serif;
 }
 
 #map {
@@ -7689,4 +7690,5 @@ body, html {
   font-size: 18px;
   padding: 5px;
   color: #fcfcfe;
+  border-radius: 2px;
 }

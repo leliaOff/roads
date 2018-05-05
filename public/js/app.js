@@ -16068,12 +16068,21 @@ var AxiosConfigService = function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_map_map__ = __webpack_require__(64);
+
+
 
 
 var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
+
     state: {
         datatableSearch: ''
+    },
+
+    modules: {
+        map: __WEBPACK_IMPORTED_MODULE_1__modules_map_map__["a" /* default */]
     }
+
 });
 
 /***/ }),
@@ -49648,14 +49657,104 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+
+        var layerName = ['layer1', 'layer2'];
+
+        return {
+
+            //Название слоёв карты
+            layerName: layerName,
+
+            /* Список слоев - меняется при изменении стиля */
+            layersList: {
+                layer1: {
+                    name: layerName[0],
+                    style: {
+                        fill: {
+                            color: '#24f636'
+                        },
+                        stroke: {
+                            color: '#24f636',
+                            width: 1
+                        },
+                        shape: {
+                            fill: {
+                                color: '#24f636'
+                            },
+                            stroke: {
+                                color: '#24f636',
+                                width: 1
+                            },
+                            points: 4,
+                            radius: 10,
+                            angle: 0
+                        }
+                    }
+                },
+                layer2: {
+                    name: layerName[1],
+                    style: {
+                        fill: {
+                            color: '#f62496'
+                        },
+                        stroke: {
+                            color: '#f62496',
+                            width: 1
+                        },
+                        shape: {
+                            fill: {
+                                color: '#f62496'
+                            },
+                            stroke: {
+                                color: '#f62496',
+                                width: 1
+                            },
+                            points: 4,
+                            radius: 10,
+                            angle: 0
+                        }
+                    }
+                }
+            },
+
+            /* Сами геоэлементы */
+            elementsList: [{
+                id: 1,
+                coordinates: [48.036666, 46.348826],
+                type: 'point',
+                name: 'Элемент 1',
+                layer: layerName[0]
+            }, {
+                id: 2,
+                coordinates: [48.035666, 46.349826],
+                type: 'point',
+                name: 'Элемент 2',
+                layer: layerName[0]
+            }, {
+                id: 3,
+                coordinates: [48.037666, 46.347826],
+                type: 'point',
+                name: 'Элемент 3',
+                layer: layerName[1]
+            }]
+
+        };
+    }
+});
 
 /***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('ol-map')], 1)
+  return _c('div', [_c('ol-map', {
+    attrs: {
+      "layersList": _vm.layersList,
+      "elementsList": _vm.elementsList
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49754,8 +49853,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            isLogin: false
+        };
+    },
+
+
+    methods: {
+        login: function login() {
+            this.isLogin = true;
+        },
+        logout: function logout() {
+            this.isLogin = false;
+        }
+    }
+});
 
 /***/ }),
 /* 62 */
@@ -49796,12 +49916,18 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('button', {
-    staticClass: "login"
-  }, [_vm._v("Вход")])])
-}]}
+  return _c('div', [(_vm.isLogin) ? _c('div', [_c('button', {
+    staticClass: "login",
+    on: {
+      "click": _vm.logout
+    }
+  }, [_vm._v("выход")])]) : _c('div', [_c('button', {
+    staticClass: "login",
+    on: {
+      "click": _vm.login
+    }
+  }, [_vm._v("вход")])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -49809,6 +49935,47 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-edb3d1c8", module.exports)
   }
 }
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* Управление переменными для работы с картой */
+var state = {
+    map: false, //Сама карта
+    zoom: 11 //Зум
+};
+
+var mutations = {
+
+    /* Обновление размера карты - необходимо, когда карта в диалоговом окне и оно открывается */
+    resize: function resize(state) {
+
+        if (state.map != false) {
+            state.map.updateSize();
+        }
+    }
+
+};
+
+var actions = {
+
+    /* Обновление размера карты - необходимо, когда карта в диалоговом окне и оно открывается */
+    mapUpdateResize: function mapUpdateResize(context) {
+        context.commit('resize');
+    }
+
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    state: state,
+    mutations: mutations,
+    actions: actions
+
+    /* кластеризация: http://openlayers.org/en/latest/examples/earthquake-clusters.html?q=style */
+
+});
 
 /***/ })
 /******/ ]);
