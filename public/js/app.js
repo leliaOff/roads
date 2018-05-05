@@ -49776,6 +49776,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logout_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Profile_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ActiveCitizen_Index_vue__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ActiveCitizen_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ActiveCitizen_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GbddOnline_Index_vue__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GbddOnline_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__GbddOnline_Index_vue__);
 //
 //
 //
@@ -49786,6 +49790,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
+
 
 
 
@@ -49812,7 +49822,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a,
         LogoutComponent: __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default.a,
-        ProfileComponent: __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default.a
+        ProfileComponent: __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default.a,
+        ActiveCitizen: __WEBPACK_IMPORTED_MODULE_3__ActiveCitizen_Index_vue___default.a,
+        GbddOnline: __WEBPACK_IMPORTED_MODULE_4__GbddOnline_Index_vue___default.a
     }
 
 });
@@ -49860,7 +49872,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "manager"
     }
-  }, [(_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
+  }, [(_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', {
+    staticClass: "cell"
+  }, [_c('active-citizen')], 1) : _vm._e(), (_vm.isLogin) ? _c('div', {
+    staticClass: "cell"
+  }, [_c('gbdd-online')], 1) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
     on: {
       "logout": _vm.logout
     }
@@ -49939,7 +49955,7 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
-    staticClass: "login",
+    staticClass: "login btn-light",
     on: {
       "click": _vm.login
     }
@@ -50166,7 +50182,7 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
-    staticClass: "login",
+    staticClass: "login btn-light",
     on: {
       "click": _vm.logout
     }
@@ -50177,6 +50193,164 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-2ea45632", module.exports)
+  }
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        login: function login() {
+            this.$emit('login');
+        }
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        login: function login() {
+            this.$emit('login');
+        }
+    }
+});
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(75),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\ActiveCitizen\\Index.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Index.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e329750", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e329750", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(72),
+  /* template */
+  __webpack_require__(76),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\GbddOnline\\Index.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Index.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bdb94464", Component.options)
+  } else {
+    hotAPI.reload("data-v-bdb94464", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "action btn-light",
+    attrs: {
+      "title": "Указать проблему на дороге"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-exclamation"
+  })])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0e329750", module.exports)
+  }
+}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "action btn-light",
+    attrs: {
+      "title": "Передать данные о наршених ПДД в ГИБДД"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-cab"
+  })])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-bdb94464", module.exports)
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="login btn-light" @click="login">вход</button>
+        <button class="action btn-light" title="Передать данные о наршених ПДД в ГИБДД"><i class="fa fa-cab"></i></button>
     </div>
 </template>
 
