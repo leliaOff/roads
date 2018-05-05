@@ -1,22 +1,19 @@
+import './bootstrap';
+import router from './routes';
+import { store } from './components/store/store';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Map from './components/map/Map.vue';
+Vue.component('map-component', Map);
 
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
+let vueInstance = new Vue({
+    el      : '#app',
+    router  : router,
+    store   : store
 });
+
+import AxiosConfigService from './components/services/requests/AxiosConfigService.js';
+window.enableAxiosInterceptor = AxiosConfigService;
+AxiosConfigService.axiosInterceptor(vueInstance);
+window.vueInstance = vueInstance;
+
+

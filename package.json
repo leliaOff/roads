@@ -23,5 +23,8 @@
         "vue-router": "^2.6.0",
         "vue2-scrollbar": "0.0.3",
         "webpack": "^2.6.1"
+    },
+    "dependencies": {
+        "vuex": "^3.0.1"
     }
 }
