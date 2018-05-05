@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ol-map :layersList="layersList" :elementsList="elementsList"></ol-map>
+        <ol-map :layersList="layersList" :elementsList="elementsList" :mapSetting="mapSetting"></ol-map>
     </div>
 </template>
 
@@ -96,8 +96,9 @@
                 }, 
 
                 /* Сами геоэлементы */
-                elementsList: []
-
+                elementsList: [],
+                
+                mapSetting: {}
             }
         },
 
@@ -185,9 +186,29 @@
                     type: this.$store.state.map.feature.type, 
                     coordinates: coordinates
                 }});
+            },
+
+            runGeolocation() {
+                let self = this;
+                var timerId = setInterval(function() {
+                    navigator.geolocation.getCurrentPosition(
+                    function geolocationSuccess(position) {
+                        self.mapSetting = [position.coords.latitude, position.coords.longitude];
+                    },     
+                    function geolocationFailure(positionError) {
+                        console.log("Ошибка геолокации");
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000}
+                    );
+                }, 2000);
             }
 
         },
 
+        mounted() {
+            this.runGeolocation();
+        }
     }
 </script>

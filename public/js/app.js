@@ -15749,7 +15749,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         //Изменили состав геоэлементов
         elementsList: function elementsList(newElementsList) {
-            console.log('elementsListUpdate', newElementsList);
             //Обновление списка элементов
             this.elementsListUpdate(newElementsList);
         },
@@ -15762,6 +15761,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //Изменили выделенный элемент 
         selectedElement: function selectedElement(newSelectedElement) {
             this.updateSelectedElement(newSelectedElement);
+        },
+
+        mapSetting: function mapSetting(newMapSetting) {
+            this.view.setCenter(ol.proj.transform(newMapSetting, 'EPSG:4326', 'EPSG:3857'));
         }
 
     },
@@ -16214,8 +16217,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
 
             /* Сами геоэлементы */
-            elementsList: []
+            elementsList: [],
 
+            mapSetting: {}
         };
     },
     created: function created() {
@@ -16296,9 +16300,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: this.$store.state.map.feature.type,
                     coordinates: coordinates
                 } });
+        },
+        runGeolocation: function runGeolocation() {
+            var self = this;
+            var timerId = setInterval(function () {
+                navigator.geolocation.getCurrentPosition(function geolocationSuccess(position) {
+                    self.mapSetting = [position.coords.latitude, position.coords.longitude];
+                }, function geolocationFailure(positionError) {
+                    console.log("Ошибка геолокации");
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000 });
+            }, 2000);
         }
-    }
+    },
 
+    mounted: function mounted() {
+        this.runGeolocation();
+    }
 });
 
 /***/ }),
@@ -47008,7 +47028,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('ol-map', {
     attrs: {
       "layersList": _vm.layersList,
-      "elementsList": _vm.elementsList
+      "elementsList": _vm.elementsList,
+      "mapSetting": _vm.mapSetting
     }
   })], 1)
 },staticRenderFns: []}
