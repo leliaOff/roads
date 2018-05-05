@@ -7661,6 +7661,10 @@ body, html {
   font-family: 'PT Sans', sans-serif;
 }
 
+button {
+  border-radius: 2px;
+}
+
 button.btn-light {
   background: none;
   border: 1px solid #fcfcfe;
@@ -7671,6 +7675,57 @@ button.btn-light {
 
 button.btn-light:hover {
   opacity: 0.5;
+}
+
+button.btn {
+  border-radius: 2px;
+}
+
+.modal-content {
+  border-radius: 2px;
+}
+
+.modal-content .row {
+  margin: 0;
+  padding: 10px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.modal-content .row label {
+  font-weight: 400;
+}
+
+.modal-content .row select {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid #8399c5;
+  width: 100%;
+  border-radius: 2px;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.modal-content .row input {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid #8399c5;
+  width: 100%;
+  border-radius: 2px;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.modal-content .row textarea {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid #8399c5;
+  width: 100%;
+  height: 122px;
+  resize: none;
+  border-radius: 2px;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #map {
@@ -7697,16 +7752,11 @@ button.btn-light:hover {
   height: 100vh;
   top: 0;
   right: 0;
-  opacity: .5;
   background: #8399c5;
-  z-index: 2;
+  z-index: 1041;
   -ms-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
   transition: opacity 0.5s ease-out;
-}
-
-#manager:hover {
-  opacity: 1;
 }
 
 #manager .profile {

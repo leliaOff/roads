@@ -49741,7 +49741,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }]
 
         };
+    },
+
+
+    watch: {
+
+        '$store.state.map.mode': function $storeStateMapMode(mode) {
+
+            if (mode == 'draw') {
+                this.drawMode();
+            } else {
+                this.selectMode();
+            }
+        }
+
+    },
+
+    methods: {
+        drawMode: function drawMode() {
+            var _this = this;
+
+            var layers = Object.assign({}, this.layersList);
+
+            //Слой для редактирования геоэлементов
+            layers['editor'] = {
+                name: 'editor',
+                modify: {
+                    type: 'Point',
+                    interactions: {
+                        draw: {
+                            drawend: function drawend(e) {
+                                _this.addFeature(e.feature);
+                            }
+                        },
+                        snap: {}
+                    }
+                },
+                style: {
+                    fill: { color: '#f62496' },
+                    stroke: { color: '#f62496', width: 1 },
+                    shape: { fill: { color: '#f62496' }, stroke: { color: '#f62496', width: 1 }, points: 66, radius: 10, angle: 0 }
+                }
+            };
+
+            this.layersList = Object.assign({}, layers);
+        },
+        selectMode: function selectMode() {
+
+            var layers = Object.assign({}, this.layersList);
+            delete layers['editor'];
+            this.layersList = Object.assign({}, layers);
+        },
+
+
+        /* Добавить новый геоэлемент */
+        addFeature: function addFeature(feature) {
+
+            //Получаем и трансформируем координаты
+            var coordinates_4326 = feature.getGeometry().getCoordinates();
+            var coordinates = [ol.proj.transform(coordinates_4326, 'EPSG:3857', 'EPSG:4326')];
+            this.$store.dispatch('createFeature', { data: {
+                    type: this.$store.state.map.feature.type,
+                    coordinates: coordinates
+                } });
+        }
     }
+
 });
 
 /***/ }),
@@ -49977,7 +50042,9 @@ if (false) {
 /* Управление переменными для работы с картой */
 var state = {
     map: false, //Сама карта
-    zoom: 11 //Зум
+    zoom: 11, //Зум
+    mode: 'default', //Режим работы карты: default - обычный, draw - рисование
+    feature: { type: '', coordinates: false }
 };
 
 var mutations = {
@@ -49988,6 +50055,16 @@ var mutations = {
         if (state.map != false) {
             state.map.updateSize();
         }
+    },
+
+    /* Переключаем режим работы карты */
+    togleMapMode: function togleMapMode(state, mode) {
+        state.mode = mode;
+    },
+
+    /* Создаем новые feature */
+    createFeature: function createFeature(state, data) {
+        state.feature = { type: data.type, coordinates: data.coordinates };
     }
 
 };
@@ -49997,6 +50074,16 @@ var actions = {
     /* Обновление размера карты - необходимо, когда карта в диалоговом окне и оно открывается */
     mapUpdateResize: function mapUpdateResize(context) {
         context.commit('resize');
+    },
+
+    /* Переключаем режим работы карты */
+    togleMapMode: function togleMapMode(context, payload) {
+        context.commit('togleMapMode', payload.mode);
+    },
+
+    /* Создаем новые feature */
+    createFeature: function createFeature(context, payload) {
+        context.commit('createFeature', payload.data);
     }
 
 };
@@ -50202,6 +50289,9 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Create_vue__);
+//
 //
 //
 //
@@ -50209,12 +50299,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        login: function login() {
-            this.$emit('login');
+    data: function data() {
+        return {
+            coordinates: false
+        };
+    },
+
+
+    watch: {
+
+        '$store.state.map.feature': function $storeStateMapFeature(feature) {
+
+            if (feature.type != 'activecitizen') return;
+
+            this.coordinates = feature.coordinates;
+            if (feature.coordinates == false) return;
+
+            $('#createActiveCitizen').modal('show');
         }
+
+    },
+
+    methods: {
+        toggleMapMode: function toggleMapMode() {
+
+            this.$store.dispatch('createFeature', { data: {
+                    type: 'activecitizen',
+                    coordinates: false
+                } });
+
+            this.$store.dispatch('togleMapMode', { mode: 'draw' });
+        }
+    },
+
+    components: {
+        CreateForm: __WEBPACK_IMPORTED_MODULE_0__Create_vue___default.a
     }
+
 });
 
 /***/ }),
@@ -50223,6 +50348,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Create_vue__);
+//
 //
 //
 //
@@ -50230,12 +50358,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        login: function login() {
-            this.$emit('login');
+    data: function data() {
+        return {
+            coordinates: false
+        };
+    },
+
+
+    watch: {
+
+        '$store.state.map.feature': function $storeStateMapFeature(feature) {
+
+            if (feature.type != 'gbddonline') return;
+
+            this.coordinates = feature.coordinates;
+            if (feature.coordinates == false) return;
+
+            $('#createGbddOnline').modal('show');
         }
+
+    },
+
+    methods: {
+        toggleMapMode: function toggleMapMode() {
+
+            this.$store.dispatch('gbddonline', { data: {
+                    type: 'activecitizen',
+                    coordinates: false
+                } });
+
+            this.$store.dispatch('togleMapMode', { mode: 'draw' });
+        }
+    },
+
+    components: {
+        CreateForm: __WEBPACK_IMPORTED_MODULE_0__Create_vue___default.a
     }
+
 });
 
 /***/ }),
@@ -50311,17 +50474,23 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
     staticClass: "action btn-light",
     attrs: {
-      "title": "Указать проблему на дороге"
+      "type": "button",
+      "title": "Создать заметку о проблеме"
+    },
+    on: {
+      "click": _vm.toggleMapMode
     }
   }, [_c('i', {
     staticClass: "fa fa-exclamation"
-  })])])
-}]}
+  })]), _vm._v(" "), _c('create-form', {
+    attrs: {
+      "coordinates": _vm.coordinates
+    }
+  })], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -50335,22 +50504,501 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
     staticClass: "action btn-light",
     attrs: {
       "title": "Передать данные о наршених ПДД в ГИБДД"
+    },
+    on: {
+      "click": _vm.toggleMapMode
     }
   }, [_c('i', {
     staticClass: "fa fa-cab"
-  })])])
-}]}
+  })]), _vm._v(" "), _c('create-form', {
+    attrs: {
+      "coordinates": _vm.coordinates
+    }
+  })], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-bdb94464", module.exports)
+  }
+}
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(78),
+  /* template */
+  __webpack_require__(79),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\ActiveCitizen\\Create.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Create.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4ba42166", Component.options)
+  } else {
+    hotAPI.reload("data-v-4ba42166", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['coordinates'],
+
+    data: function data() {
+
+        return {
+
+            problemsTypes: {
+                1: 'яма на дороге',
+                2: 'нет тротуара',
+                3: 'нет разметки на дороге',
+                4: 'отсутствует освещение',
+                5: 'проход по тротуару невозможен'
+            },
+            item: {
+                type: 1,
+                text: ''
+            }
+        };
+    },
+
+
+    methods: {
+        create: function create() {
+
+            //Сохраняем заметку о новой проблеме на дороге
+            // axios.post('createActiveCitizen', {
+            //     coordinates : this.coordinates,
+            //     type        : this.item.type,
+            //     text        : this.item.text
+            // }).then(response => {
+
+            //Очищаем данные
+            this.clean();
+
+            //Закрываем окно
+            $('#createActiveCitizen').modal('hide');
+
+            //}).catch((error) => {});
+
+            //Удаляем рисовательный слой с карты
+            this.$store.dispatch('togleMapMode', { mode: 'select' });
+        },
+        close: function close() {
+            this.clean();
+        },
+        clean: function clean() {
+            //Очищаем данные
+            this.$store.dispatch('createFeature', { data: { type: '', coordinates: false } });
+            this.item.type = 1;
+            this.item.text = '';
+
+            this.$store.dispatch('togleMapMode', { mode: 'select' });
+        }
+    }
+
+});
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "modal fade bs-example-modal-lg",
+    attrs: {
+      "id": "createActiveCitizen",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "createActiveCitizenLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-lg",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-8 clearfix"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.type),
+      expression: "item.type"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.$set(_vm.item, "type", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+      }
+    }
+  }, _vm._l((_vm.problemsTypes), function(type, i) {
+    return _c('option', {
+      key: i,
+      attrs: {
+        "value": "i"
+      }
+    }, [_vm._v(_vm._s(type))])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-8 clearfix"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.text),
+      expression: "item.text"
+    }],
+    domProps: {
+      "value": (_vm.item.text)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.item, "text", $event.target.value)
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.create()
+      }
+    }
+  }, [_vm._v("Создать")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    },
+    on: {
+      "click": function($event) {
+        _vm.close()
+      }
+    }
+  }, [_vm._v("Закрыть окно")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('h4', {
+    staticClass: "modal-title",
+    attrs: {
+      "id": "createActiveCitizenLabel"
+    }
+  }, [_vm._v("Новая заметка о проблеме")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-4 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Категория проблемы:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-4 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Описание проблемы:")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4ba42166", module.exports)
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(10)(
+  /* script */
+  __webpack_require__(81),
+  /* template */
+  __webpack_require__(82),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\GbddOnline\\Create.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Create.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-aa06b2a0", Component.options)
+  } else {
+    hotAPI.reload("data-v-aa06b2a0", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['coordinates'],
+
+    data: function data() {
+
+        return {
+            item: {
+                text: ''
+            }
+        };
+    },
+
+
+    methods: {
+        create: function create() {
+
+            //Сохраняем заметку о новой проблеме на дороге
+            // axios.post('createGbddOnline', {
+            //     coordinates : this.coordinates,
+            //     text        : this.item.text
+            // }).then(response => {
+
+            //Очищаем данные
+            this.clean();
+
+            //Закрываем окно
+            $('#createGbddOnline').modal('hide');
+
+            //}).catch((error) => {});
+
+            //Удаляем рисовательный слой с карты
+            this.$store.dispatch('togleMapMode', { mode: 'select' });
+        },
+        close: function close() {
+            this.clean();
+        },
+        clean: function clean() {
+            //Очищаем данные
+            this.$store.dispatch('createFeature', { data: { type: '', coordinates: false } });
+            this.item.text = '';
+            this.$store.dispatch('togleMapMode', { mode: 'select' });
+        }
+    }
+
+});
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "modal fade bs-example-modal-lg",
+    attrs: {
+      "id": "createGbddOnline",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "createGbddOnlineLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-lg",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-8 clearfix"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.text),
+      expression: "item.text"
+    }],
+    domProps: {
+      "value": (_vm.item.text)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.item, "text", $event.target.value)
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.create()
+      }
+    }
+  }, [_vm._v("Создать")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    },
+    on: {
+      "click": function($event) {
+        _vm.close()
+      }
+    }
+  }, [_vm._v("Закрыть окно")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('h4', {
+    staticClass: "modal-title",
+    attrs: {
+      "id": "createGbddOnlineLabel"
+    }
+  }, [_vm._v("Новое заявление в ГИБДД")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-4 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Текст заявления:")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-aa06b2a0", module.exports)
   }
 }
 
