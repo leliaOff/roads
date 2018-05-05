@@ -121,7 +121,73 @@
                 self.elementsList = layers.concat(response.data);
 
             });
-        }
+        },
+        watch: {
+
+            '$store.state.map.mode': function(mode) {
+                
+                if(mode == 'draw') {
+                    this.drawMode();
+                } else {
+                    this.selectMode();
+                }
+
+            }
+
+        },
+
+        methods: {
+
+            drawMode() {
+
+                let layers = Object.assign({}, this.layersList);             
+                
+                //Слой для редактирования геоэлементов
+                layers['editor'] = {
+                    name: 'editor',
+                    modify: { 
+                        type: 'Point',
+                        interactions: {
+                            draw: {
+                                drawend: (e) => {
+                                    this.addFeature(e.feature);
+                                }
+                            },
+                            snap: { }
+                        }
+                    },
+                    style: {
+                        fill: { color: '#f62496' },
+                        stroke: { color: '#f62496', width: 1 },
+                        shape: { fill: { color: '#f62496' }, stroke: { color: '#f62496', width: 1 }, points: 66, radius: 10, angle: 0 }
+                    }
+                };
+
+                this.layersList = Object.assign({}, layers);
+                
+            },
+
+            selectMode() {
+
+                let layers = Object.assign({}, this.layersList);
+                delete layers['editor'];
+                this.layersList = Object.assign({}, layers);
+
+            },
+
+            /* Добавить новый геоэлемент */
+            addFeature(feature) {
+                
+                //Получаем и трансформируем координаты
+                let coordinates_4326 = feature.getGeometry().getCoordinates();
+                let coordinates = [ol.proj.transform(coordinates_4326, 'EPSG:3857', 'EPSG:4326')];
+                this.$store.dispatch('createFeature', {data: {
+                    type: this.$store.state.map.feature.type, 
+                    coordinates: coordinates
+                }});
+            }
+
+        },
 
     }
 </script>
