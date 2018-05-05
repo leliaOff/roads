@@ -26,6 +26,11 @@
                 this.coordinates = feature.coordinates;
                 if(feature.coordinates == false) return;
 
+                this.$notify({
+                    title:  'Создание заявления',
+                    text:   'Заполните заявление. Загрузите фото или видео, фиксирующие факт нарушения. Укажите регистрационный номер нарушителя и дату нарушения'
+                });
+
                 $('#createGbddOnline').modal('show');
 
             }
@@ -36,8 +41,13 @@
             
             toggleMapMode() {
 
-                this.$store.dispatch('gbddonline', {data: {
-                    type: 'activecitizen', 
+                this.$notify({
+                    title:  'Создание заявления',
+                    text:   'Укажите место нарушения ПДД на карте'
+                });
+
+                this.$store.dispatch('createFeature', {data: {
+                    type: 'gbddonline', 
                     coordinates: false
                 }});
 

@@ -15501,6 +15501,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -46328,7 +46329,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "wrapper"
-  }, [_c('map-component'), _vm._v(" "), _c('manager-component')], 1)
+  }, [_c('notifications'), _vm._v(" "), _c('map-component'), _vm._v(" "), _c('manager-component')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -50319,6 +50320,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.coordinates = feature.coordinates;
             if (feature.coordinates == false) return;
 
+            this.$notify({
+                title: 'Создание заметки о проблеме',
+                text: 'Как можно более подробно опишите возникшую проблему'
+            });
+
             $('#createActiveCitizen').modal('show');
         }
 
@@ -50326,6 +50332,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         toggleMapMode: function toggleMapMode() {
+
+            this.$notify({
+                title: 'Создание заметки о проблеме',
+                text: 'Укажите метоположение проблемы на карте'
+            });
 
             this.$store.dispatch('createFeature', { data: {
                     type: 'activecitizen',
@@ -50378,6 +50389,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.coordinates = feature.coordinates;
             if (feature.coordinates == false) return;
 
+            this.$notify({
+                title: 'Создание заявления',
+                text: 'Заполните заявление. Загрузите фото или видео, фиксирующие факт нарушения. Укажите регистрационный номер нарушителя и дату нарушения'
+            });
+
             $('#createGbddOnline').modal('show');
         }
 
@@ -50386,8 +50402,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         toggleMapMode: function toggleMapMode() {
 
-            this.$store.dispatch('gbddonline', { data: {
-                    type: 'activecitizen',
+            this.$notify({
+                title: 'Создание заявления',
+                text: 'Укажите место нарушения ПДД на карте'
+            });
+
+            this.$store.dispatch('createFeature', { data: {
+                    type: 'gbddonline',
                     coordinates: false
                 } });
 
@@ -50648,6 +50669,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Закрываем окно
             $('#createActiveCitizen').modal('hide');
 
+            //Уведомление
+            this.$notify({
+                title: 'Заметка о проблеме создана',
+                text: 'Новая заметка о проблеме создана и добавлена на карту'
+            });
+
             //}).catch((error) => {});
 
             //Удаляем рисовательный слой с карты
@@ -50863,6 +50890,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50873,7 +50914,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         return {
             item: {
-                text: ''
+                text: '',
+                number: '',
+                date: ''
             }
         };
     },
@@ -50894,6 +50937,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Закрываем окно
             $('#createGbddOnline').modal('hide');
 
+            //Уведомление
+            this.$notify({
+                title: 'Заявление создано',
+                text: 'Ваше заявление успешно создано и отправлено в ГИБДД'
+            });
+
             //}).catch((error) => {});
 
             //Удаляем рисовательный слой с карты
@@ -50906,6 +50955,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //Очищаем данные
             this.$store.dispatch('createFeature', { data: { type: '', coordinates: false } });
             this.item.text = '';
+            this.item.number = '';
+            this.item.date = '';
             this.$store.dispatch('togleMapMode', { mode: 'select' });
         }
     }
@@ -50937,7 +50988,53 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-8 clearfix"
+    staticClass: "col-sm-7 clearfix"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.number),
+      expression: "item.number"
+    }],
+    attrs: {
+      "placeholder": "О717УУ30"
+    },
+    domProps: {
+      "value": (_vm.item.number)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.item, "number", $event.target.value)
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-7 clearfix"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.date),
+      expression: "item.date"
+    }],
+    attrs: {
+      "placeholder": "25.09.2017 13:45"
+    },
+    domProps: {
+      "value": (_vm.item.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.item, "date", $event.target.value)
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-7 clearfix"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -50989,7 +51086,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Новое заявление в ГИБДД")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-4 clearfix"
+    staticClass: "col-sm-5 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Регистрационный номер нарушителя:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-5 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Дата и время нарушения:")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-5 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
   }, [_vm._v("Текст заявления:")])])

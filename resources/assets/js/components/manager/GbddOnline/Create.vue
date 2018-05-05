@@ -10,8 +10,22 @@
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-sm-4 clearfix"><label class="input-title">Текст заявления:</label></div>
-                            <div class="col-sm-8 clearfix">
+                            <div class="col-sm-5 clearfix"><label class="input-title">Регистрационный номер нарушителя:</label></div>
+                            <div class="col-sm-7 clearfix">
+                                <input v-model="item.number" placeholder="О717УУ30"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5 clearfix"><label class="input-title">Дата и время нарушения:</label></div>
+                            <div class="col-sm-7 clearfix">
+                                <input v-model="item.date" placeholder="25.09.2017 13:45"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5 clearfix"><label class="input-title">Текст заявления:</label></div>
+                            <div class="col-sm-7 clearfix">
                                 <textarea v-model="item.text"></textarea>
                             </div>
                         </div>
@@ -38,7 +52,9 @@
 
             return {
                 item: {
-                    text:   '',
+                    text    : '',
+                    number  : '',
+                    date    : '',
                 }
             }
         },
@@ -59,6 +75,12 @@
                     //Закрываем окно
                     $('#createGbddOnline').modal('hide');
 
+                    //Уведомление
+                    this.$notify({
+                        title:  'Заявление создано',
+                        text:   'Ваше заявление успешно создано и отправлено в ГИБДД'
+                    });
+
                 //}).catch((error) => {});
 
                 //Удаляем рисовательный слой с карты
@@ -74,6 +96,8 @@
                 //Очищаем данные
                 this.$store.dispatch('createFeature', {data: { type: '',  coordinates: false }});
                 this.item.text = '';
+                this.item.number = '';
+                this.item.date = '';
                 this.$store.dispatch('togleMapMode', {mode: 'select'});
             }
 

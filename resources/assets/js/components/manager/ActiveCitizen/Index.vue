@@ -25,6 +25,11 @@
                 
                 this.coordinates = feature.coordinates;
                 if(feature.coordinates == false) return;
+
+                this.$notify({
+                    title:  'Создание заметки о проблеме',
+                    text:   'Как можно более подробно опишите возникшую проблему'
+                });
                 
                 $('#createActiveCitizen').modal('show');
 
@@ -35,6 +40,11 @@
         methods: {
             
             toggleMapMode() {
+
+                this.$notify({
+                    title:  'Создание заметки о проблеме',
+                    text:   'Укажите метоположение проблемы на карте'
+                });
 
                 this.$store.dispatch('createFeature', {data: {
                     type: 'activecitizen', 

@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <notifications></notifications>
         <map-component></map-component>
         <manager-component></manager-component>
     </div>
