@@ -17,6 +17,8 @@
     <link href="{{ URL::asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
     <link rel="stylesheet" href="{{ URL::asset('css/ol.css') }}">
 
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+
     <title>Безопасные дороги</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     
