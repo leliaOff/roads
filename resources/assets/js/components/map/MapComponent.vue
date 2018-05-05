@@ -16,8 +16,6 @@
 
             return {
 
-                data: [],
-
                 //Название слоёв карты
                 layerName: layerName,
 
@@ -98,46 +96,30 @@
                 }, 
 
                 /* Сами геоэлементы */
-                elementsList: [
-                    {
-                        id: 1,
-                        coordinates: [48.036666, 46.348826],
-                        type: 'point',
-                        name: 'Элемент 1',
-                        layer: layerName[0]
-                    },
-                    {
-                        id: 2,
-                        coordinates: [48.035666, 46.349826],
-                        type: 'point',
-                        name: 'Элемент 2',
-                        layer: layerName[0]
-                    },
-                    {
-                        id: 3,
-                        coordinates: [48.037666, 46.347826],
-                        type: 'point',
-                        name: 'Элемент 3',
-                        layer: layerName[1]
-                    },
-                    {
-                        id: 5,
-                        coordinates: [[78.104434, 65.970212],[78.104634, 65.970412],[78.08259, 65.973831],[78.08059, 65.973631]],
-                        type: 'MultiPolygon',
-                        name: 'Элемент 5',
-                        layer: layerName[2]
-                    },
-                ]
+                elementsList: []
 
             }
         },
 
         created() {
             let self = this;
-            axios.get('./get_data')
+            
+            //Ремонт на дорогах
+            axios.get('./get_road_works')
             .then(function (response) {
-                self.data = response.data;
-                // self.elementsList = 
+                
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
+            });
+            
+            //Аварийность 
+            axios.get('./get_road_accidents')
+            .then(function (response) {
+             
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
             });
         }
 

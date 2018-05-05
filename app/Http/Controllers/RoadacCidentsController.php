@@ -3,40 +3,52 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RoadAccidents;
+use App\Models\RoadWorks;
 
 class RoadacCidentsController extends Controller
 {
 
-    public function getData() {
-        return $this->mockeData();
+    public function getRoadWorks() {
+        
+        $data = RoadWorks::orderBy('id')->limit(5)->get();
+        $array = [];
+        for ($i = 0; $i < count($data); $i++) {
+            $array[] = [
+                'id' => $data[$i]['id'],
+                'coordinates' => $this->coordinates($data[$i]),
+                'type' => 'MultiPolygon',
+                'name' => $data[$i]['repair_kind'],
+                'layer' => 'layer3'
+            ];
+        }
+
+        return $array;
+
     }
 
-    private function mockeData() {
-        return [(object)[ 
-            "repair_kind"=> "Ремонт", 
-            "date_start"=> "", 
-            "date_end"=> "", 
-            "date_start_plan"=> "20180301", 
-            "date_end_plan"=> "20180301", 
-            "start_latitude": "65.970112", 
-            "start_longitude": "78.104234", 
-            "finish_latitude": "65.973731", 
-            "finish_longitude": "78.08459",
-            "reason"=> "Не определена", 
-            "trouble_type"=> "Не определен" 
-        ],
-        (object)[ 
-            "repair_kind"=> "Ремонт", 
-            "date_start"=> "", 
-            "date_end"=> "", 
-            "date_start_plan"=> "20180301", 
-            "date_end_plan"=> "20180301", 
-            "start_latitude": "65.970312", 
-            "start_longitude": "78.104534", 
-            "finish_latitude": "65.973731", 
-            "finish_longitude": "78.08159",
-            "reason"=> "Не определена", 
-            "trouble_type"=> "Не определен" 
-        ]];
+    private function coordinates($data) {
+        $array = [];
+        $array[] = [$data['start_lon'] - 0.0001, $data['start_lat'] - 0.0001];
+        $array[] = [$data['start_lon'] + 0.0001, $data['start_lat'] + 0.0001];
+        $array[] = [$data['end_lon'] + 0.0001, $data['end_lat'] + 0.0001];
+        $array[] = [$data['end_lon'] - 0.0001, $data['end_lat'] - 0.0001];
+        return $array;
     }
+
+    public function getRoadAccidents() {
+        $data = RoadAccidents::orderBy('id')->limit(5)->get();
+        $array = [];
+        for ($i = 0; $i < count($data); $i++) {
+            $array[] = [
+                'id' => $data[$i]['id'],
+                'coordinates' => [(float)$data[$i]['lon'],  (float)$data[$i]['lat']],
+                'type' => 'point',
+                'name' => $data[$i]['crash_type'],
+                'layer' => 'layer1'
+            ];
+        }
+        return $array;
+    }
+
 }

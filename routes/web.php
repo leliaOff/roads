@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/get_data', 'RoadacCidentsController@getData');
+Route::get('/get_road_works', 'RoadacCidentsController@getRoadWorks');
+Route::get('/get_road_accidents', 'RoadacCidentsController@getRoadAccidents');

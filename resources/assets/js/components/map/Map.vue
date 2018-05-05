@@ -68,7 +68,7 @@
 
             //Изменили состав геоэлементов
             elementsList: function(newElementsList) {
-
+                console.log('elementsListUpdate', newElementsList);
                 //Обновление списка элементов
                 this.elementsListUpdate(newElementsList);
 
@@ -112,8 +112,8 @@
             /* Создание карты */
             init() {
 
-                let mapSetting = {
-                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [78.104534, 65.970312] : [78.104534, 65.970312],
+                let mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
+                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [45.235, 54.2644] : this.mapSetting.center,
                     zoom:   (this.mapSetting == undefined || this.mapSetting.zoom == undefined)   ? 16                     : this.mapSetting.zoom,
                 };
                 
