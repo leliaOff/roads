@@ -57,9 +57,7 @@
                 item: {
                     type:   1,
                     text:   '',
-                },
-                lat: '',
-                lon: ''
+                }
             }
         },
         
@@ -68,9 +66,9 @@
             create() {
                 
                 //Сохраняем заметку о новой проблеме на дороге
-                // axios.post('createActiveCitizen', {
-                //     lat         : this.lat,
-                //     lon         : this.lon,
+                // axios.post('/api/activecitizen/create', {
+                //     lat         : this.coordinates[0],
+                //     lon         : this.coordinates[1],
                 //     type        : this.item.type,
                 //     description        : this.item.text
                 // }).then(response => {

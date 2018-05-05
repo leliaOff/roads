@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    
+    // GET: /api/activecitizen/list
     import Create    from './Create.vue';
 
     export default {
