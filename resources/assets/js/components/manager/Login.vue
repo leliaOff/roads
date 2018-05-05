@@ -10,6 +10,10 @@
             login() {
                 this.$emit('login');
             },
+            goToPage: function(event, namePage) {
+                event.preventDefault()
+                this.$router.push(namePage)
+            }
         }
     }
 </script>
