@@ -77,8 +77,7 @@
                 
                 //Сохраняем заметку о новой проблеме на дороге
                 axios.post('/api/gibddonline/create', {
-                    lat : this.coordinates[0],
-                    lon : this.coordinates[1],
+                    coordinates : this.coordinates,
                     description : this.item.text,
                     transport_number : this.item.number,
                     offence_registered_at : this.item.date,

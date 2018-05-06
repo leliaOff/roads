@@ -2,7 +2,7 @@
     <div>
         <ol-map :layersList="layersList" :elementsList="showElementsList" :mapSetting="mapSetting"></ol-map>
         <feature-information></feature-information>
-        <div style="position: absolute; bottom: 0px; right: 0px; z-index: 5000; padding: 10px; color: white;">Скорость {{speed}} км./ч.</div>
+        <div style="position: absolute; bottom: 0px; right: 0px; z-index: 5000; padding: 10px; color: white;">Скорость {{speed}} км./ч. {{lat.toFixed(5)}}, {{lon.toFixed(5)}}</div>
     </div>
 </template>
 
@@ -48,7 +48,8 @@
 
                 /* Сами геоэлементы */
                 elementsList:       [],
-
+                lat: 45.235,
+                lon: 54.2644,
                 mapSetting: {},
                 speed: 0,
             }
@@ -146,6 +147,8 @@
                 var timerId = setInterval(function() {
                     navigator.geolocation.getCurrentPosition(
                     function geolocationSuccess(position) {
+                        self.lat = position.coords.latitude;
+                        self.lon = position.coords.longitude;
                         self.mapSetting = [position.coords.latitude, position.coords.longitude];
                         if (timer % 5 == 0 && timer != 0) {
                             let dis = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), new google.maps.LatLng(oldLat, oldLon))

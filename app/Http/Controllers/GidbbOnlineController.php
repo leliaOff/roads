@@ -12,10 +12,14 @@ class GidbbOnlineController extends Controller
             $claim->description = $request->description;
             $claim->transport_number = $request->transport_number;
             $claim->offence_registered_at = $request->offence_registered_at;
-            $claim->lat = $request->lat;
-            $claim->lon = $request->lon;
+            $claim->lat = $request->coordinates[0][0];
+            $claim->lon = $request->coordinates[0][1];
             $claim->user_id = 1;
-            $claim->files = $request->files_offence;
+            $files = $request->files_offence;
+            if(empty($request->files_offence)){
+                $files = array();
+            }
+            $claim->files = json_encode($files);
             $claim->save();
         } catch(\Exception $ex){
             return response($ex->getMessage(),500);
