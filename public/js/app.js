@@ -16005,6 +16005,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48510,17 +48516,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-content"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "modal-body"
-  }, _vm._l((_vm.items), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _vm._l((_vm.items), function(item) {
     return _c('div', {
       staticClass: "row"
-    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
+    }, [_c('div', {
       staticClass: "col-sm-3 clearfix"
-    }, [_vm._v("\n                            " + _vm._s(item.description) + "\n                        ")]), _vm._v(" "), _vm._m(2, true), _vm._v(" "), _c('div', {
+    }, [_vm._v("\n                            " + _vm._s(item.description) + "\n                        ")]), _vm._v(" "), _c('div', {
       staticClass: "col-sm-3 clearfix"
-    }, [_vm._v("\n                            " + _vm._s(item.offence_registered_at) + "\n                        ")]), _vm._v(" "), _vm._m(3, true), _vm._v(" "), _c('div', {
+    }, [_vm._v("\n                            " + _vm._s(item.offence_registered_at) + "\n                        ")]), _vm._v(" "), _c('div', {
       staticClass: "col-sm-3 clearfix"
-    }, [_vm._v("\n                            " + _vm._s(item.transport_number) + "\n                        ")])])
-  })), _vm._v(" "), _vm._m(4)])])])])
+    }, [_vm._v("\n                            " + _vm._s(item.transport_number) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.status) + "\n                        ")])])
+  })], 2), _vm._v(" "), _vm._m(2)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
@@ -48532,22 +48540,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Отправленные заявления в ГИБДД")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-sm-1 clearfix"
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
-  }, [_vm._v("Описание нарушения")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-1 clearfix"
+  }, [_vm._v("Описание нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
-  }, [_vm._v("Время фиксации нарушения")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-1 clearfix"
+  }, [_vm._v("Время фиксации нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
-  }, [_vm._v("Номер ТС")])])
+  }, [_vm._v("Номер ТС")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Статус")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-footer"
