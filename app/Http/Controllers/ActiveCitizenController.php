@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 class ActiveCitizenController extends Controller
 {
     public function create(Request $request){
+        return $request;
         try{
             $citizen = new ActiveCitizen();
             $citizen->type = $request->type;
             $citizen->description = $request->description;
-            $citizen->lat = $request->lat;
-            $citizen->lon = $request->lon;
-            $citizen->likes = 0;
-            $citizen->files = $citizen->files_uploaded;
+            $citizen->lat = $request->coordinates[0][0];
+            $citizen->lon = $request->coordinates[0][1];
+            $citizen->likes = 0;            
+            $citizen->files = json_encode($request->files_uploaded);
             $citizen->save();
         } catch (\Exception $ex){
-            return response('',500);
+            return response($ex->getMessage(),500);
         }
         return $citizen;
     }

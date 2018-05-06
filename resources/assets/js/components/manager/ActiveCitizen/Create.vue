@@ -57,7 +57,9 @@
                 item: {
                     type:   1,
                     text:   '',
-                }
+                    files: []
+                },
+                
             }
         },
         
@@ -66,12 +68,12 @@
             create() {
                 
                 //Сохраняем заметку о новой проблеме на дороге
-                // axios.post('/api/activecitizen/create', {
-                //     lat         : this.coordinates[0],
-                //     lon         : this.coordinates[1],
-                //     type        : this.item.type,
-                //     description        : this.item.text
-                // }).then(response => {
+                axios.post('/api/activecitizen/create', {
+                    coordinates         : this.coordinates,
+                    type        : this.item.type,
+                    description        : this.item.text,
+                    files_uploaded : this.item.files
+                }).then(response => {
 
                     //Очищаем данные
                     this.clean();
@@ -85,7 +87,7 @@
                         text:   'Новая заметка о проблеме создана и добавлена на карту'
                     });
 
-                //}).catch((error) => {});
+                }).catch((error) => {});
 
                 //Удаляем рисовательный слой с карты
                 this.$store.dispatch('togleMapMode', {mode: 'select'});
