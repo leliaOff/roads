@@ -52,7 +52,7 @@
 
             getList() {
                 
-				var url = window.baseurl + 'gibddonline/list';
+				var url = '/gibddonline/list';
 
 				axios.post(url, {user_id: 1}).then((response) => {
 				    this.items = response.data;
