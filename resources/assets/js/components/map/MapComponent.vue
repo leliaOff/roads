@@ -1,6 +1,7 @@
 <template>
     <div>
         <ol-map :layersList="layersList" :elementsList="elementsList" :mapSetting="mapSetting"></ol-map>
+        <div style="position: absolute; bottom: 0px; right: 0px; z-index: 5000; padding: 10px; color: white;">Скорость {{speed}} км./ч.</div>
     </div>
 </template>
 
@@ -99,7 +100,8 @@
                 /* Сами геоэлементы */
                 elementsList: [],
 
-                mapSetting: {}
+                mapSetting: {},
+                speed: 0,
             }
         },
 
@@ -191,12 +193,28 @@
 
             runGeolocation() {
                 let self = this;
+                let timer = 0;
+                let oldLat, oldLon = 0;
+                let newLat, newLon = 0;
                 var timerId = setInterval(function() {
                     navigator.geolocation.getCurrentPosition(
                     function geolocationSuccess(position) {
                         self.mapSetting = [position.coords.latitude, position.coords.longitude];
+                        if (timer % 5 == 0 && timer != 0) {
+                            let dis = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), new google.maps.LatLng(oldLat, oldLon))
+                            oldLon = position.coords.longitude;
+                            oldLat = position.coords.latitude;
+                            self.speed = (dis / 1000) / 12;
+                            console.log('скорость', self.speed);
+                        } 
+                        if (timer == 0) {
+                            oldLon = position.coords.longitude;
+                            oldLat = position.coords.latitude;
+                        }
+                        timer = timer + 1;
                     },     
                     function geolocationFailure(positionError) {
+                        timer = timer + 1;
                         console.log("Ошибка геолокации");
                     }, {
                         enableHighAccuracy: true,

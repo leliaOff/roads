@@ -2,12 +2,14 @@
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>;
         window.baseurl = "<?=getenv('APP_URL');?>";
     </script>
+    
 
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
@@ -31,6 +33,5 @@
 
 <script src="{{ url('js/ol.js') }}"></script>
 <script src="{{ url('js/app.js') }}"></script>
-
 </body>
 </html>
