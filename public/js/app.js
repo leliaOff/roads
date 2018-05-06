@@ -15796,30 +15796,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         create: function create() {
+            var _this = this;
+
             var files = JSON.stringify(this.item.files);
+
             //Сохраняем заметку о новой проблеме на дороге
-            // axios.post('/api/gibddonline/create', {
-            //     lat         : this.coordinates[0],
-            //     lon         : this.coordinates[1],
-            //     description        : this.item.text,
-            //     transport_number      : this.item.number,
-            //     offence_registered_at        : this.item.date,
-            //     files_offence       : files,
-            // }).then(response => {
+            axios.post('/api/gibddonline/create', {
+                lat: this.coordinates[0],
+                lon: this.coordinates[1],
+                description: this.item.text,
+                transport_number: this.item.number,
+                offence_registered_at: this.item.date,
+                files_offence: files
+            }).then(function (response) {
 
-            //Очищаем данные
-            this.clean();
+                //Очищаем данные
+                _this.clean();
 
-            //Закрываем окно
-            $('#createGbddOnline').modal('hide');
+                //Закрываем окно
+                $('#createGbddOnline').modal('hide');
 
-            //Уведомление
-            this.$notify({
-                title: 'Заявление создано',
-                text: 'Ваше заявление успешно создано и отправлено в ГИБДД'
-            });
-
-            //}).catch((error) => {});
+                //Уведомление
+                _this.$notify({
+                    title: 'Заявление создано',
+                    text: 'Ваше заявление успешно создано и отправлено в ГИБДД'
+                });
+            }).catch(function (error) {});
 
             //Удаляем рисовательный слой с карты
             this.$store.dispatch('togleMapMode', { mode: 'select' });
@@ -15837,7 +15839,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('togleMapMode', { mode: 'select' });
         },
         uploadFile: function uploadFile() {
-            var _this = this;
+            var _this2 = this;
 
             var url = window.baseurl + '/parent/user/upload';
             var config = { headers: { 'content-type': 'multipart/form-data' } };
@@ -15849,9 +15851,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.post(url, data, config).then(function (response) {
                 if (response.data.status == 'success') {
-                    _this.avatar = response.data.result;
+                    _this2.avatar = response.data.result;
                 } else {
-                    _this.validation = response.data;
+                    _this2.validation = response.data;
                 }
             });
         },

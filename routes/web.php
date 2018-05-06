@@ -21,4 +21,4 @@ Route::get('/get_road_emergencies', 'RoadacCidentsController@getRoadEmergencies'
 Route::post('/uploads', 'FilesController@uploads');
 
 Route::post('/gibddonline/list', 'GidbbOnlineController@list');
-Route::post('/gibddonline/create','GidbbOnlineController@create');
+
