@@ -24,6 +24,6 @@ class GidbbOnlineController extends Controller
     }
 
     public function list(Request $request){
-        return GibddOnline::where('user_id',$request->user_id)->get();
+        return GibddOnline::where('user_id', $request->user_id)->get();
     }
 }

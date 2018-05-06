@@ -1,13 +1,16 @@
 <template>
     <div>
-        <button class="action btn-light" title="Передать данные о наршених ПДД в ГИБДД" @click="toggleMapMode"><i class="fa fa-cab"></i></button>
+        <button class="action btn-light gbdd-online" title="Передать данные о наршених ПДД в ГИБДД" @click="toggleMapMode"><i class="fa fa-cab"></i></button><!--
+        --><button type="button" class="action btn-light gbdd-online-list" title="Список заявлений в ГИБДД"><i class="fa fa-list"></i></button>
         <create-form :coordinates="coordinates"></create-form>
+        <list-dialog></list-dialog>
     </div>
 </template>
 
 <script>
-    // POST: /api/gibddonline/list предать user_id: 1
+
     import Create    from './Create.vue';
+    import ListDialog    from './List.vue';
 
     export default {
 
@@ -76,6 +79,7 @@
 
         components: {
             CreateForm: Create,
+            ListDialog: ListDialog
         },
 
     }

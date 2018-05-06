@@ -19,3 +19,6 @@ Route::get('/get_road_works', 'RoadacCidentsController@getRoadWorks');
 Route::get('/get_road_accidents', 'RoadacCidentsController@getRoadAccidents');
 Route::get('/get_road_emergencies', 'RoadacCidentsController@getRoadEmergencies');
 Route::post('/uploads', 'FilesController@uploads');
+
+Route::post('/gibddonline/list', 'GidbbOnlineController@list');
+Route::post('/gibddonline/create','GidbbOnlineController@create');

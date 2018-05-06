@@ -20,7 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request){
 Route::get('/activecitizen/list','ActiveCitizenController@list');
 Route::post('/activecitizen/create','ActiveCitizenController@create');
 
-Route::post('/gibddonline/list','GidbbOnlineController@list');
-Route::post('/gibddonline/create','GidbbOnlineController@create');
-
 

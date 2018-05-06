@@ -15874,6 +15874,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Create_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__List_vue__);
+//
+//
 //
 //
 //
@@ -15882,7 +15886,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-// POST: /api/gibddonline/list предать user_id: 1
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -15946,7 +15951,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     components: {
-        CreateForm: __WEBPACK_IMPORTED_MODULE_0__Create_vue___default.a
+        CreateForm: __WEBPACK_IMPORTED_MODULE_0__Create_vue___default.a,
+        ListDialog: __WEBPACK_IMPORTED_MODULE_1__List_vue___default.a
     }
 
 });
@@ -48390,7 +48396,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
-    staticClass: "action btn-light",
+    staticClass: "action btn-light gbdd-online",
     attrs: {
       "title": "Передать данные о наршених ПДД в ГИБДД"
     },
@@ -48399,12 +48405,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-cab"
-  })]), _vm._v(" "), _c('create-form', {
+  })]), _vm._m(0), _vm._v(" "), _c('create-form', {
     attrs: {
       "coordinates": _vm.coordinates
     }
-  })], 1)
-},staticRenderFns: []}
+  }), _vm._v(" "), _c('list-dialog')], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "action btn-light gbdd-online-list",
+    attrs: {
+      "type": "button",
+      "title": "Список заявлений в ГИБДД"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-list"
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -51923,6 +51939,160 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-3b9015b8", module.exports)
+  }
+}
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+
+        return {
+            items: []
+        };
+    },
+
+
+    methods: {
+        getList: function getList() {
+            var _this = this;
+
+            var url = window.baseurl + 'gibddonline/list';
+
+            axios.post(url, { user_id: 1 }).then(function (response) {
+                _this.items = response.data;
+            });
+        }
+    },
+
+    mounted: function mounted() {
+        this.getList();
+    }
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(92),
+  /* template */
+  __webpack_require__(94),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\manager\\GbddOnline\\List.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] List.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f26ac52", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f26ac52", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "modal fade bs-example-modal-lg",
+    attrs: {
+      "id": "listGbddOnline",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "listGbddOnlineLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-lg",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_c('h4', {
+    staticClass: "modal-title",
+    attrs: {
+      "id": "listGbddOnlineLabel"
+    }
+  }, [_vm._v("Отправленные заявления в ГИБДД")])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-5 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-7 clearfix"
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Закрыть окно")])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5f26ac52", module.exports)
   }
 }
 
