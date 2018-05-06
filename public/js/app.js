@@ -15967,12 +15967,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         toggleLayer: function toggleLayer(i) {
+
             this.layersList[i].checked = !this.layersList[i].checked;
+
+            if (this.layersList[i].checked) {
+                this.$store.dispatch('selectLayers', { layer: i });
+            } else {
+                this.$store.dispatch('unselectLayers', { layer: i });
+            }
         }
     },
 
-    computed: {}
-
+    mounted: function mounted() {
+        for (var i in this.layersList) {
+            this.$store.dispatch('selectLayers', { layer: i });
+        }
+    }
 });
 
 /***/ }),
@@ -16366,6 +16376,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     var properties = e.selected[0].getProperties();
                     var element = _this.getElementById(properties.id);
+
+                    if (!element) return;
+
                     _this.selectedElement = element;
                 });
             }
@@ -16712,7 +16725,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         };
     },
+
+
+    computed: {
+
+        /* Скрыть элементы слоя и показать */
+        showElementsList: function showElementsList() {
+
+            var elements = [];
+            var selectedLayers = this.$store.state.map.selectedLayers;
+
+            $.each(this.elementsList, function (i, item) {
+                if (selectedLayers.indexOf(item.layer) != -1) {
+                    elements.push(item);
+                }
+            });
+
+            return elements;
+        }
+    },
+
     created: function created() {
+
         var self = this;
 
         //Ремонт на дорогах
@@ -16729,6 +16763,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.elementsList = layers.concat(response.data);
         });
     },
+
 
     watch: {
 
@@ -16796,8 +16831,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var timerId = setInterval(function () {
                 navigator.geolocation.getCurrentPosition(function geolocationSuccess(position) {
                     self.mapSetting = [position.coords.latitude, position.coords.longitude];
-                }, function geolocationFailure(positionError) {
-                    console.log("Ошибка геолокации");
+                }, function (positionError) {
+                    console.log('\u041E\u0448\u0438\u0431\u043A\u0430 \u0433\u0435\u043E\u043B\u043E\u043A\u0430\u0446\u0438\u0438: ' + positionError);
+                    clearTimeout(timerId);
                 }, {
                     enableHighAccuracy: true,
                     timeout: 10000,
@@ -17001,7 +17037,8 @@ var state = {
     map: false, //Сама карта
     zoom: 11, //Зум
     mode: 'default', //Режим работы карты: default - обычный, draw - рисование
-    feature: { type: '', coordinates: false }
+    feature: { type: '', coordinates: false },
+    selectedLayers: []
 };
 
 var mutations = {
@@ -17022,6 +17059,18 @@ var mutations = {
     /* Создаем новые feature */
     createFeature: function createFeature(state, data) {
         state.feature = { type: data.type, coordinates: data.coordinates };
+    },
+
+    /* Выбрать слой */
+    selectLayers: function selectLayers(state, layer) {
+        state.selectedLayers.push(layer);
+    },
+
+    /* Снять выделение со слоя */
+    unselectLayers: function unselectLayers(state, layer) {
+        var i = state.selectedLayers.indexOf(layer);
+        if (i == -1) return;
+        state.selectedLayers.splice(i, 1);
     }
 
 };
@@ -17041,6 +17090,16 @@ var actions = {
     /* Создаем новые feature */
     createFeature: function createFeature(context, payload) {
         context.commit('createFeature', payload.data);
+    },
+
+    /* Выбрать слой */
+    selectLayers: function selectLayers(context, payload) {
+        context.commit('selectLayers', payload.layer);
+    },
+
+    /* Снять выделение со слоя */
+    unselectLayers: function unselectLayers(context, payload) {
+        context.commit('unselectLayers', payload.layer);
     }
 
 };
@@ -47821,11 +47880,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row",
       attrs: {
         "title": layer.description
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggleLayer(i)
-        }
       }
     }, [_c('button', {
       class: {
@@ -47837,7 +47891,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }), _c('label', {
-      staticClass: "layer-title"
+      staticClass: "layer-title",
+      on: {
+        "click": function($event) {
+          _vm.toggleLayer(i)
+        }
+      }
     }, [_vm._v(_vm._s(layer.title))])])
   }))
 },staticRenderFns: []}
@@ -48096,7 +48155,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('ol-map', {
     attrs: {
       "layersList": _vm.layersList,
-      "elementsList": _vm.elementsList,
+      "elementsList": _vm.showElementsList,
       "mapSetting": _vm.mapSetting
     }
   })], 1)

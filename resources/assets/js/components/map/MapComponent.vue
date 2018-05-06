@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ol-map :layersList="layersList" :elementsList="elementsList" :mapSetting="mapSetting"></ol-map>
+        <ol-map :layersList="layersList" :elementsList="showElementsList" :mapSetting="mapSetting"></ol-map>
     </div>
 </template>
 
@@ -61,19 +61,38 @@
                 }, 
 
                 /* Сами геоэлементы */
-                elementsList: [],
+                elementsList:       [],
 
                 mapSetting: {}
-                
+
             }
         },
 
+        computed: {
+            
+            /* Скрыть элементы слоя и показать */
+            showElementsList() {
+
+                let elements = [];
+                let selectedLayers = this.$store.state.map.selectedLayers;
+
+                $.each(this.elementsList, (i, item) => {
+                    if(selectedLayers.indexOf(item.layer) != -1) {
+                        elements.push(item);
+                    }
+                });
+
+                return elements;
+            }
+
+        },
+
         created() {
+            
             let self = this;
             
             //Ремонт на дорогах
-            axios.get('./get_road_works')
-            .then(function (response) {
+            axios.get('./get_road_works').then(function (response) {
                 
                 let layers = self.elementsList;
                 self.elementsList = layers.concat(response.data);
@@ -81,14 +100,14 @@
             });
             
             //Аварийность 
-            axios.get('./get_road_accidents')
-            .then(function (response) {
+            axios.get('./get_road_accidents').then(function (response) {
              
                 let layers = self.elementsList;
                 self.elementsList = layers.concat(response.data);
 
             });
         },
+
         watch: {
 
             '$store.state.map.mode': function(mode) {
@@ -99,7 +118,7 @@
                     this.selectMode();
                 }
 
-            }
+            },
 
         },
 
@@ -158,18 +177,19 @@
                 let self = this;
                 var timerId = setInterval(function() {
                     navigator.geolocation.getCurrentPosition(
-                    function geolocationSuccess(position) {
-                        self.mapSetting = [position.coords.latitude, position.coords.longitude];
-                    },     
-                    function geolocationFailure(positionError) {
-                        console.log("Ошибка геолокации");
-                    }, {
-                        enableHighAccuracy: true,
-                        timeout: 10000,
-                        maximumAge: 60000}
-                    );
+                        function geolocationSuccess(position) {
+                            self.mapSetting = [position.coords.latitude, position.coords.longitude];
+                        },     
+                        (positionError) => {
+                            console.log(`Ошибка геолокации: ${positionError}`);
+                            clearTimeout(timerId);
+                        }, {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 60000}
+                        );
                 }, 2000);
-            }
+            },
 
         },
 

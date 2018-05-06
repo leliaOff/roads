@@ -189,6 +189,9 @@
                        
                         var properties = e.selected[0].getProperties();
                         let element = this.getElementById(properties.id);
+
+                        if(!element) return;
+                        
                         this.selectedElement = element;
 
                     });

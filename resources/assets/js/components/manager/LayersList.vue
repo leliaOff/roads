@@ -1,8 +1,8 @@
 <template>
     <div class="layers-list">
-        <div class="row" v-for="(layer, i) in layersList" :key="i" :title="layer.description" @click="toggleLayer(i)">
+        <div class="row" v-for="(layer, i) in layersList" :key="i" :title="layer.description">
             <button v-bind:class="{ checkbox: true, fa: true, 'fa-check': layer.checked }" @click="toggleLayer(i)"></button><!--
-            --><label class="layer-title">{{ layer.title }}</label>
+            --><label class="layer-title" @click="toggleLayer(i)">{{ layer.title }}</label>
         </div>
     </div>
 </template>
@@ -39,13 +39,25 @@
         },
 
         methods: {
+            
             toggleLayer(i) {
+                
                 this.layersList[i].checked = !this.layersList[i].checked;
+                
+                if(this.layersList[i].checked) {
+                    this.$store.dispatch('selectLayers', {layer: i});
+                } else {
+                    this.$store.dispatch('unselectLayers', {layer: i});
+                }
+
             }
+
         },
 
-        computed: {
-
+        mounted() {
+            for(let i in this.layersList) {
+                this.$store.dispatch('selectLayers', {layer: i});
+            }
         },
 
     }
