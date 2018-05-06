@@ -68,7 +68,6 @@
 
             //Изменили состав геоэлементов
             elementsList: function(newElementsList) {
-                console.log('elementsListUpdate', newElementsList);
                 //Обновление списка элементов
                 this.elementsListUpdate(newElementsList);
 
@@ -83,6 +82,10 @@
             selectedElement: function(newSelectedElement) {
                 this.updateSelectedElement(newSelectedElement);
             },
+
+            mapSetting: function(newMapSetting) {
+                this.view.setCenter(ol.proj.transform(newMapSetting, 'EPSG:4326', 'EPSG:3857'));
+            }
 
         },
         
