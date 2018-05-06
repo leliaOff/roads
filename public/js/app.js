@@ -16714,6 +16714,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -16754,8 +16755,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             /* Сами геоэлементы */
             elementsList: [],
 
-            mapSetting: {}
-
+            mapSetting: {},
+            speed: 0
         };
     },
 
@@ -16841,12 +16842,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         runGeolocation: function runGeolocation() {
             var self = this;
+            var timer = 0;
+            var oldLat = void 0,
+                oldLon = 0;
+            var newLat = void 0,
+                newLon = 0;
             var timerId = setInterval(function () {
                 navigator.geolocation.getCurrentPosition(function geolocationSuccess(position) {
                     self.mapSetting = [position.coords.latitude, position.coords.longitude];
-                }, function (positionError) {
-                    console.log('\u041E\u0448\u0438\u0431\u043A\u0430 \u0433\u0435\u043E\u043B\u043E\u043A\u0430\u0446\u0438\u0438: ' + positionError);
-                    clearTimeout(timerId);
+                    if (timer % 5 == 0 && timer != 0) {
+                        var dis = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), new google.maps.LatLng(oldLat, oldLon));
+                        oldLon = position.coords.longitude;
+                        oldLat = position.coords.latitude;
+                        self.speed = dis / 1000 / 12;
+                        console.log('скорость', self.speed);
+                    }
+                    if (timer == 0) {
+                        oldLon = position.coords.longitude;
+                        oldLat = position.coords.latitude;
+                    }
+                    timer = timer + 1;
+                }, function geolocationFailure(positionError) {
+                    timer = timer + 1;
+                    console.log("Ошибка геолокации");
                 }, {
                     enableHighAccuracy: true,
                     timeout: 10000,
@@ -48213,7 +48231,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "elementsList": _vm.showElementsList,
       "mapSetting": _vm.mapSetting
     }
-  }), _vm._v(" "), _c('feature-information')], 1)
+  }), _vm._v(" "), _c('feature-information'), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "position": "absolute",
+      "bottom": "0px",
+      "right": "0px",
+      "z-index": "5000",
+      "padding": "10px",
+      "color": "white"
+    }
+  }, [_vm._v("Скорость " + _vm._s(_vm.speed) + " км./ч.")])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

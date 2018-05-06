@@ -13,6 +13,8 @@ class ActiveCitizenController extends Controller
             $citizen->description = $request->description;
             $citizen->lat = $request->lat;
             $citizen->lon = $request->lon;
+            $citizen->likes = 0;
+            $citizen->files = $citizen->files_uploaded;
             $citizen->save();
         } catch (\Exception $ex){
             return response('',500);
@@ -22,5 +24,20 @@ class ActiveCitizenController extends Controller
 
     public function list() {
         return ActiveCitizen::all();
+    }
+
+    public function like(Request $request){
+        try{
+            $entry = ActiveCitizen::where('id',$request->id)->firstOrFail();
+        } catch(\Exception $ex){
+            return response($ex->getMessage(),500);
+        }
+        $entry->likes++;
+        try{
+            $entry->save();
+        } catch(\Exception $ex){
+            return response($ex->getMessage(),500);
+        }
+        return $entry;
     }
 }
