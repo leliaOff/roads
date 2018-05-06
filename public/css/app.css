@@ -7657,6 +7657,7 @@ body, html {
   background: #fcfcfe;
   width: 100%;
   height: 100vh;
+  min-width: 320px;
   overflow: hidden;
   font-family: 'PT Sans', sans-serif;
 }
@@ -7766,8 +7767,11 @@ button.btn {
 }
 
 #manager .profile > div {
-  border-bottom: 1px solid #fcfcfe;
   padding: 10px;
+}
+
+#manager .profile > div.isLogin {
+  border-bottom: 1px solid #fcfcfe;
 }
 
 #manager .profile .profile-image {
@@ -7804,13 +7808,13 @@ button.btn {
   vertical-align: top;
   width: 50%;
   text-align: center;
-  padding: 20px 10px 0 5px;
+  padding: 20px 5px 0 20px;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 #manager .cell:nth-child(2n) {
-  padding: 20px 5px 0 10px;
+  padding: 20px 20px 0 5px;
 }
 
 #manager .action {
@@ -7819,12 +7823,42 @@ button.btn {
   font-size: 30px;
 }
 
+#manager .layers-list {
+  margin: 20px 10px;
+  padding: 20px 0;
+  border-top: 1px solid #fcfcfe;
+}
+
+#manager .layers-list .row {
+  margin: 0;
+  cursor: pointer;
+}
+
+#manager .layers-list .row button.checkbox {
+  width: 16px;
+  background: none;
+  height: 16px;
+  border: 1px solid #fcfcfe;
+  vertical-align: top;
+  display: inline-block;
+  margin: 2px -16px 0 0;
+  color: #fcfcfe;
+  font-size: 11px;
+  padding: 0;
+}
+
+#manager .layers-list .row label {
+  font-weight: 400;
+  color: #fcfcfe;
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 0 26px;
+  cursor: pointer;
+}
+
 #manager .login {
   width: 100px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  margin: 0 0 0 -50px;
   font-size: 18px;
   padding: 5px;
 }
@@ -7835,6 +7869,47 @@ button.btn {
 
 .file-form .add-file {
   width: 100%;
+}
+
+.scrollbar {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.scrollbar .vue-scrollbar__scrollbar-vertical .scrollbar,
+.scrollbar .vue-scrollbar__scrollbar-horizontal .scrollbar {
+  background: #fcfcfe;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+#menu-show {
+  display: none;
+  height: 51px;
+  right: 9px;
+  position: fixed;
+  top: 9px;
+  color: #fcfcfe;
+  width: 51px;
+  border: none;
+  background: #8399c5;
+}
+
+#menu-hide {
+  display: none;
+  width: 100%;
+  height: 60px;
+  background: none;
+  color: #fcfcfe;
+  border: none;
+  border-bottom: 1px solid;
+  margin: 0 0 10px;
 }
 
 .notifications .notification-wrapper {
@@ -7854,4 +7929,17 @@ button.btn {
 .notifications .notification-title {
   font-weight: 400;
   line-height: 2;
+}
+
+.right-enter-active, .right-leave-active {
+  transition: right 1s;
+}
+
+@media only screen and (max-width: 640px) {
+  #menu-show {
+    display: block;
+  }
+  #menu-hide {
+    display: block;
+  }
 }

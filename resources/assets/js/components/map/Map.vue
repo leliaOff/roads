@@ -68,7 +68,6 @@
 
             //Изменили состав геоэлементов
             elementsList: function(newElementsList) {
-                console.log('elementsListUpdate', newElementsList);
                 //Обновление списка элементов
                 this.elementsListUpdate(newElementsList);
 
@@ -83,6 +82,10 @@
             selectedElement: function(newSelectedElement) {
                 this.updateSelectedElement(newSelectedElement);
             },
+
+            mapSetting: function(newMapSetting) {
+                this.view.setCenter(ol.proj.transform(newMapSetting, 'EPSG:4326', 'EPSG:3857'));
+            }
 
         },
         
@@ -114,7 +117,7 @@
 
                 let mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
                     center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [45.235, 54.2644] : this.mapSetting.center,
-                    zoom:   (this.mapSetting == undefined || this.mapSetting.zoom == undefined)   ? 16                     : this.mapSetting.zoom,
+                    zoom:   (this.mapSetting == undefined || this.mapSetting.zoom == undefined)   ? 12 : this.mapSetting.zoom,
                 };
                 
                 //Если не найден контейнер с картой
@@ -176,6 +179,23 @@
                         this.modify.layer = layer.name;
                         this.createInteractions(source, layer.modify);
                     }                 
+                } else {
+                    
+                    var select = new ol.interaction.Select();
+                    this.map.addInteraction(select);
+                    select.on('select', (e) => {
+
+                        if(e.selected.length == 0) return;
+                       
+                        var properties = e.selected[0].getProperties();
+                        let element = this.getElementById(properties.id);
+
+                        if(!element) return;
+                        
+                        this.selectedElement = element;
+
+                    });
+                    
                 }
 
                 this.map.addLayer(vectorLayer);
@@ -214,12 +234,17 @@
                     }
                 }
 
-                if(title) {
+                if(title && style.isLabel) {
                     styleProperties.text = new ol.style.Text({
-                        font: '16px Calibri, sans-serif',
+                        font: '14px \'PT Sans\', sans-serif',
                         fill: new ol.style.Fill({
                             color: '#ffffff'
                         }),
+                        stroke: new ol.style.Stroke ({
+                            color: '#333333',
+                            width: 2
+                        }),
+                        offsetY: -20,
                         text: title,
                     });
                 }
@@ -309,6 +334,7 @@
                     'layer_name':   element.layer,
                     'id':           element.id,
                     'type':         element.type,
+                    'data':         element.data
                 });
 
                 //Добавляем геоэлементы на слой
@@ -424,6 +450,15 @@
                 style = this.createStyle(style, newSelectedElement.name);
                 feature.setStyle(style);
 
+            },
+
+            getElementById(id) {
+                for(let i in this.elementsList) {
+                    if(this.elementsList[i].id == id) {
+                        return this.elementsList[i];
+                    }
+                }
+                return false;
             }
 
             /*

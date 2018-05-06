@@ -50,6 +50,7 @@ body, html {
     background: $white;
     width: 100%;
     height: 100vh;
+    min-width: 320px;
     overflow: hidden;
     font-family: 'PT Sans', sans-serif;
 }
@@ -155,8 +156,11 @@ button {
         @include box-sizing(border-box);
 
         & > div {
-            border-bottom: 1px solid $white;
             padding: 10px;
+
+            &.isLogin {
+                border-bottom: 1px solid $white;
+            }
         }
         
         .profile-image {
@@ -193,11 +197,11 @@ button {
         vertical-align: top;
         width: 50%;
         text-align: center;
-        padding: 20px 10px 0 5px;
+        padding: 20px 5px 0 20px;
         @include box-sizing(border-box);
 
         &:nth-child(2n) {
-            padding: 20px 5px 0 10px;
+            padding: 20px 20px 0 5px;
         }
     }
 
@@ -207,15 +211,49 @@ button {
         font-size: 30px;
     }
 
+    .layers-list {
+
+        margin: 20px 10px;
+        padding: 20px 0;
+        border-top: 1px solid $white;
+
+        .row {
+
+            margin: 0;
+            cursor: pointer;
+
+            button {
+                &.checkbox {
+                    width: 16px;
+                    background: none;
+                    height: 16px;
+                    border: 1px solid $white;
+                    vertical-align: top;
+                    display: inline-block;
+                    margin: 2px -16px 0 0;
+                    color: $white;
+                    font-size: 11px;
+                    padding: 0;
+                }
+            }
+
+            label {
+                font-weight: 400;
+                color: $white;
+                vertical-align: top;
+                display: inline-block;
+                width: 100%;
+                padding: 0 0 0 26px;
+                cursor: pointer;
+            }
+        }
+    }
+
     .login {
         width: 100px;
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        margin: 0 0 0 -50px;
         font-size: 18px;
         padding: 5px;
-    }
+    }  
 }
 
 .file-form {
@@ -229,6 +267,48 @@ button {
     .add-file {
         width: 100%;
     }
+}
+
+.scrollbar {
+
+    height: 100vh !important;
+    overflow: hidden !important;
+
+    .vue-scrollbar__scrollbar-vertical .scrollbar,
+    .vue-scrollbar__scrollbar-horizontal .scrollbar {
+        background: $white;
+    }
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+#menu-show {
+    display: none;
+    height: 51px;
+    right: 9px;
+    position: fixed;
+    top: 9px;
+    color: $white;
+    width: 51px;
+    border: none;
+    background: $manager-bg;
+}
+
+#menu-hide {
+    display: none;
+    width: 100%;
+    height: 60px;
+    background: none;
+    color: #fcfcfe;
+    border: none;
+    border-bottom: 1px solid;
+    margin: 0 0 10px;
 }
 
 
@@ -252,3 +332,9 @@ button {
         line-height: 2;
     }
 }
+
+.right-enter-active, .right-leave-active {
+    transition: right 1s;
+}
+
+@import "repsonsive";

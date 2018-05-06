@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="align-center">
         <button class="login btn-light" @click="login">вход</button>
     </div>
 </template>
