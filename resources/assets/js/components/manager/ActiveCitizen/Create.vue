@@ -13,7 +13,7 @@
                             <div class="col-sm-4 clearfix"><label class="input-title">Категория проблемы:</label></div>
                             <div class="col-sm-8 clearfix">
                                 <select v-model="item.type">
-                                    <option v-for="(type, i) in problemsTypes" :key="i" value="i">{{ type }}</option>
+                                    <option v-for="(type, i) in problemsTypes" :key="i" :value="i">{{ type }}</option>
                                 </select>
                             </div>
                         </div>
