@@ -5,10 +5,11 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        
-                        <div class="row" v-for="(item, i) in items" :key="i" v-if="item != '' && isShow(i)">
+                          
+                        <div class="row" v-for="(item, i) in items" :key="i" v-if="(item != '' && isShow(i)) || i == 'likes'">
                             <div class="col-sm-6 clearfix"><label class="input-title">{{ getTitle(i) }}</label></div>
                             <div class="col-sm-6 clearfix" v-if="i == 'description'"><textarea v-model="items[i]" readonly></textarea></div>
+                            <div class="col-sm-6 clearfix" v-else-if="i == 'likes'">{{items[i]}} <button type="button" class="btn"  @click="getLike(1, i)">Добавить лайк</button></div>
                             <div class="col-sm-6 clearfix" v-else><input v-model="items[i]" type="text" readonly /></div>
                         </div>
 
@@ -53,6 +54,8 @@
                     'work_finished_at': 'Планируемая дата окончания работ',
                     'work_actually_started_at': 'Фактическая дата начала работ',
                     'work_actually_finished_at': 'Фактическая дата окончания работ',
+                    'type': 'Вид проблемы',
+                    'likes': 'Колличество лайков : '
                 },
                 hidden: [
                     'id', 'lat', 'lon', 'created_at', 'updated_at', 'start_lat', 'start_lon', 'end_lat', 'end_lon'
@@ -78,6 +81,13 @@
 
             getTitle(alias) {
                 return this.aliases[alias] == undefined ? alias : this.aliases[alias];
+            },
+
+            getLike(like, key) {
+                this.items[key] = this.items[key] + like;
+                axios.post('./api/activecitizen/like', {'id': this.items['id']}).then(function (response) {
+
+                });
             },
 
             isShow(alias) {

@@ -15,7 +15,7 @@
         data() {
 
             let layerName = [
-                'layer1', 'layer2', 'layer3'
+                'layer1', 'layer2', 'layer3', 'layer4'
             ];
 
             return {
@@ -43,7 +43,12 @@
                         style: { fill: { color: '#39d64e50' }, stroke: { color: '#39d64e', width: 1 }, isLabel: false, },
                         selectedStyle: { fill: { color: '#39d64e80' }, stroke: { color: '#39d64e', width: 2 }, isLabel: true, }
                     },
-                    //TODO: народный контроль - layer4
+                    /* Народный контроль */
+                    layer4: {
+                        name: layerName[3],
+                        style: { shape: { fill: { color: '#FFEF00' }, stroke: { color: '#FFEF00', width: 2 }, points: 66, radius: 5, }, isLabel: false, },
+                        selectedStyle: { shape: { fill: { color: '#FFF555' }, stroke: { color: '#FFF555', width: 2 }, points: 66, radius: 8, }, isLabel: true }
+                    },
                 }, 
 
                 /* Сами геоэлементы */
@@ -199,6 +204,14 @@
             //ЧП 
             axios.get('./get_road_emergencies').then(function (response) {
              
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
+            });
+
+            //народный контроль
+            axios.get('./api/activecitizen/list').then(function (response) {
+
                 let layers = self.elementsList;
                 self.elementsList = layers.concat(response.data);
 

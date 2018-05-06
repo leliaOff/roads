@@ -114,9 +114,9 @@
 
             /* Создание карты */
             init() {
-
+                                    //[48.010260679344, 46.31337570957] [46.31337570957, 48.010260679344]
                 let mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
-                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [45.235, 54.2644] : this.mapSetting.center,
+                    center: (this.mapSetting == undefined || this.mapSetting.center == undefined) ? [46.31337570957, 48.010260679344] : this.mapSetting.center,
                     zoom:   (this.mapSetting == undefined || this.mapSetting.zoom == undefined)   ? 12 : this.mapSetting.zoom,
                 };
                 

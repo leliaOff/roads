@@ -16344,9 +16344,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         /* Создание карты */
         init: function init() {
-
+            //[48.010260679344, 46.31337570957] [46.31337570957, 48.010260679344]
             var mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
-                center: this.mapSetting == undefined || this.mapSetting.center == undefined ? [45.235, 54.2644] : this.mapSetting.center,
+                center: this.mapSetting == undefined || this.mapSetting.center == undefined ? [46.31337570957, 48.010260679344] : this.mapSetting.center,
                 zoom: this.mapSetting == undefined || this.mapSetting.zoom == undefined ? 12 : this.mapSetting.zoom
             };
 
@@ -16724,7 +16724,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
 
-        var layerName = ['layer1', 'layer2', 'layer3'];
+        var layerName = ['layer1', 'layer2', 'layer3', 'layer4'];
 
         return {
 
@@ -16750,8 +16750,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     name: layerName[2],
                     style: { fill: { color: '#39d64e50' }, stroke: { color: '#39d64e', width: 1 }, isLabel: false },
                     selectedStyle: { fill: { color: '#39d64e80' }, stroke: { color: '#39d64e', width: 2 }, isLabel: true }
+                },
+                /* Народный контроль */
+                layer4: {
+                    name: layerName[3],
+                    style: { shape: { fill: { color: '#FFEF00' }, stroke: { color: '#FFEF00', width: 2 }, points: 66, radius: 5 }, isLabel: false },
+                    selectedStyle: { shape: { fill: { color: '#FFF555' }, stroke: { color: '#FFF555', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 }
-                //TODO: народный контроль - layer4
             },
 
             /* Сами геоэлементы */
@@ -16898,6 +16903,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         //ЧП 
         axios.get('./get_road_emergencies').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+
+        //народный контроль
+        axios.get('./api/activecitizen/list').then(function (response) {
 
             var layers = self.elementsList;
             self.elementsList = layers.concat(response.data);
@@ -48038,8 +48050,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.problemsTypes), function(type, i) {
     return _c('option', {
       key: i,
-      attrs: {
-        "value": "i"
+      domProps: {
+        "value": i
       }
     }, [_vm._v(_vm._s(type))])
   }))])]), _vm._v(" "), _c('div', {
@@ -48453,6 +48465,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "action btn-light gbdd-online-list",
     attrs: {
       "type": "button",
+      "data-toggle": "modal",
+      "data-target": "#listGbddOnline",
       "title": "Список заявлений в ГИБДД"
     }
   }, [_c('i', {
@@ -51791,6 +51805,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51819,7 +51834,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 'work_started_at': 'Планируемая дата начала работ',
                 'work_finished_at': 'Планируемая дата окончания работ',
                 'work_actually_started_at': 'Фактическая дата начала работ',
-                'work_actually_finished_at': 'Фактическая дата окончания работ'
+                'work_actually_finished_at': 'Фактическая дата окончания работ',
+                'type': 'Вид проблемы',
+                'likes': 'Колличество лайков : '
             },
             hidden: ['id', 'lat', 'lon', 'created_at', 'updated_at', 'start_lat', 'start_lon', 'end_lat', 'end_lon']
         };
@@ -51842,6 +51859,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getTitle: function getTitle(alias) {
             return this.aliases[alias] == undefined ? alias : this.aliases[alias];
+        },
+        getLike: function getLike(like, key) {
+            this.items[key] = this.items[key] + like;
+            axios.post('./api/activecitizen/like', { 'id': this.items['id'] }).then(function (response) {});
         },
         isShow: function isShow(alias) {
             return this.hidden.indexOf(alias) == -1 ? true : false;
@@ -51908,7 +51929,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "modal-body"
   }, _vm._l((_vm.items), function(item, i) {
-    return (item != '' && _vm.isShow(i)) ? _c('div', {
+    return ((item != '' && _vm.isShow(i)) || i == 'likes') ? _c('div', {
       key: i,
       staticClass: "row"
     }, [_c('div', {
@@ -51936,7 +51957,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.$set(_vm.items, i, $event.target.value)
         }
       }
-    })]) : _c('div', {
+    })]) : (i == 'likes') ? _c('div', {
+      staticClass: "col-sm-6 clearfix"
+    }, [_vm._v(_vm._s(_vm.items[i]) + " "), _c('button', {
+      staticClass: "btn",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.getLike(1, i)
+        }
+      }
+    }, [_vm._v("Добавить лайк")])]) : _c('div', {
       staticClass: "col-sm-6 clearfix"
     }, [_c('input', {
       directives: [{
@@ -52015,6 +52048,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -52030,7 +52079,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getList: function getList() {
             var _this = this;
 
-            var url = window.baseurl + 'gibddonline/list';
+            var url = '/gibddonline/list';
 
             axios.post(url, { user_id: 1 }).then(function (response) {
                 _this.items = response.data;
@@ -52082,8 +52131,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "modal fade bs-example-modal-lg",
     attrs: {
@@ -52099,24 +52146,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "modal-content"
-  }, [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._m(1), _vm._v(" "), _vm._l((_vm.items), function(item) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.description) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.offence_registered_at) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.transport_number) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.status) + "\n                        ")])])
+  })], 2), _vm._v(" "), _vm._m(2)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "modal-header"
   }, [_c('h4', {
     staticClass: "modal-title",
     attrs: {
       "id": "listGbddOnlineLabel"
     }
-  }, [_vm._v("Отправленные заявления в ГИБДД")])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_c('div', {
+  }, [_vm._v("Отправленные заявления в ГИБДД")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-sm-5 clearfix"
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-7 clearfix"
-  })])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Описание нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Время фиксации нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Номер ТС")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Статус")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-warning",
@@ -52124,7 +52199,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "data-dismiss": "modal"
     }
-  }, [_vm._v("Закрыть окно")])])])])])])
+  }, [_vm._v("Закрыть окно")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
