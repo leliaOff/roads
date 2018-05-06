@@ -20,6 +20,7 @@ class ActiveCitizen extends Migration
             $table->string('lat');
             $table->string('lon');
             $table->bigInteger('likes');
+            $table->json('files');
             $table->timestamps();
         });
     }

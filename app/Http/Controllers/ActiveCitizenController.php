@@ -14,6 +14,7 @@ class ActiveCitizenController extends Controller
             $citizen->lat = $request->lat;
             $citizen->lon = $request->lon;
             $citizen->likes = 0;
+            $citizen->files = $citizen->files_uploaded;
             $citizen->save();
         } catch (\Exception $ex){
             return response('',500);
