@@ -1,26 +1,25 @@
 <template>
     <div>
-        <vue-scrollbar class="scrollbar" ref="mainScrollbar">
             <transition name="right">
-                <div id="manager" v-show="showMenu">
 
-                    <button id="menu-hide" @click="showMenu = false">свернуть меню</button>
+                <vue-scrollbar class="scrollbar" ref="mainScrollbar" id="manager" v-show="showMenu">
+                    <div>
+                        <button id="menu-hide" @click="showMenu = false">свернуть меню</button>
 
-                    <profile-component v-if="isLogin"></profile-component>
+                        <profile-component v-if="isLogin"></profile-component>
 
-                    <div class="cell" v-if="isLogin"><active-citizen></active-citizen></div><!--
-                    --><div class="cell" v-if="isLogin"><gbdd-online></gbdd-online></div>
+                        <div class="cell" v-if="isLogin"><active-citizen></active-citizen></div><!--
+                        --><div class="cell" v-if="isLogin"><gbdd-online></gbdd-online></div>
 
-                    <layers-list v-if="isLogin"></layers-list>
+                        <layers-list v-if="isLogin"></layers-list>
 
-                    <div class="actions">
-                        <logout-component v-if="isLogin" v-on:logout="logout"></logout-component>
-                        <login-component v-else v-on:login="login"></login-component>
+                        <div class="actions">
+                            <logout-component v-if="isLogin" v-on:logout="logout"></logout-component>
+                            <login-component v-else v-on:login="login"></login-component>
+                        </div>
                     </div>
-
-                </div>
+                </vue-scrollbar>
             </transition>
-        </vue-scrollbar>
 
         <button id="menu-show" @click="showMenu = true"><i class="fa fa-bars"></i></button>
     </div>

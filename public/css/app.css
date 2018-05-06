@@ -7877,6 +7877,11 @@ button.btn {
   overflow: hidden !important;
 }
 
+.scrollbar .vue-scrollbar__scrollbar-vertical .scrollbar,
+.scrollbar .vue-scrollbar__scrollbar-horizontal .scrollbar {
+  background: #fcfcfe;
+}
+
 #menu-show {
   display: none;
   height: 51px;
