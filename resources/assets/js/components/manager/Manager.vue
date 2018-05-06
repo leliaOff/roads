@@ -32,12 +32,37 @@
 
     export default {
 
+        data() {
+            return {
+                isLogin: true,
+                showMenu: ($(document).width() > 640)
+            }
+        },
+
+        methods: {
+
+            login() {
+                this.isLogin = true;
+            },
+
+            logout() {
+                this.isLogin = false;
+            }
+
+        },
+
         components: {
             ProfileComponent    : Profile,
             LayersList          : LayersList,
             ActiveCitizen       : ActiveCitizen,
             GbddOnline          : GbddOnline,
         },
+
+        mounted() {
+            $(window).resize(() => {
+                this.showMenu = ($(document).width() > 640);
+            });
+        }
 
     }
 </script>

@@ -16069,14 +16069,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            isLogin: true,
+            showMenu: $(document).width() > 640
+        };
+    },
+
+
+    methods: {
+        login: function login() {
+            this.isLogin = true;
+        },
+        logout: function logout() {
+            this.isLogin = false;
+        }
+    },
 
     components: {
         ProfileComponent: __WEBPACK_IMPORTED_MODULE_0__Profile_vue___default.a,
         LayersList: __WEBPACK_IMPORTED_MODULE_1__LayersList_vue___default.a,
         ActiveCitizen: __WEBPACK_IMPORTED_MODULE_2__ActiveCitizen_Index_vue___default.a,
         GbddOnline: __WEBPACK_IMPORTED_MODULE_3__GbddOnline_Index_vue___default.a
-    }
+    },
 
+    mounted: function mounted() {
+        var _this = this;
+
+        $(window).resize(function () {
+            _this.showMenu = $(document).width() > 640;
+        });
+    }
 });
 
 /***/ }),
