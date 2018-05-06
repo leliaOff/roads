@@ -1,7 +1,7 @@
 <template>
     <div>
         <button class="action btn-light gbdd-online" title="Передать данные о наршених ПДД в ГИБДД" @click="toggleMapMode"><i class="fa fa-cab"></i></button><!--
-        --><button type="button" class="action btn-light gbdd-online-list" title="Список заявлений в ГИБДД"><i class="fa fa-list"></i></button>
+        --><button type="button" data-toggle="modal" data-target="#listGbddOnline" class="action btn-light gbdd-online-list" title="Список заявлений в ГИБДД"><i class="fa fa-list"></i></button>
         <create-form :coordinates="coordinates"></create-form>
         <list-dialog></list-dialog>
     </div>

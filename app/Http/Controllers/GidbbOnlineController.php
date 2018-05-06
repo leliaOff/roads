@@ -28,6 +28,11 @@ class GidbbOnlineController extends Controller
     }
 
     public function list(Request $request){
-        return GibddOnline::where('user_id', $request->user_id)->get();
+        $statuses = ['В работе', 'Закрыто','На подтверждении','Ожидание ответа'];
+        $data = GibddOnline::where('user_id', $request->user_id)->get();
+        for($i = 0; $i < count($data); $i++){
+            $data[$i]['status'] = $statuses[rand()%4];
+        }
+        return $data;
     }
 }

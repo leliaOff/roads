@@ -8,11 +8,27 @@
                         <h4 class="modal-title" id="listGbddOnlineLabel">Отправленные заявления в ГИБДД</h4>
                     </div>
                     <div class="modal-body">
-
                         <div class="row">
-                            <div class="col-sm-5 clearfix"><label class="input-title"></label></div>
-                            <div class="col-sm-7 clearfix">
-                                
+                            <div class="col-sm-3 clearfix"><label class="input-title">Описание нарушения</label></div>
+                            <div class="col-sm-3 clearfix"><label class="input-title">Время фиксации нарушения</label></div>
+                            <div class="col-sm-3 clearfix"><label class="input-title">Номер ТС</label></div>
+                            <div class="col-sm-3 clearfix"><label class="input-title">Статус</label></div>
+                        </div>
+                        <div class="row" v-for="item in items">
+                            <div class="col-sm-3 clearfix">
+                                {{ item.description }}
+                            </div>
+
+                            <div class="col-sm-3 clearfix">
+                                {{ item.offence_registered_at }}
+                            </div>
+
+                            <div class="col-sm-3 clearfix">
+                                {{ item.transport_number }}
+                            </div>
+
+                            <div class="col-sm-3 clearfix">
+                                {{ item.status }}
                             </div>
                         </div>
 
@@ -42,7 +58,7 @@
 
             getList() {
                 
-				var url = window.baseurl + 'gibddonline/list';
+				var url = '/gibddonline/list';
 
 				axios.post(url, {user_id: 1}).then((response) => {
 				    this.items = response.data;

@@ -51753,6 +51753,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "action btn-light gbdd-online-list",
     attrs: {
       "type": "button",
+      "data-toggle": "modal",
+      "data-target": "#listGbddOnline",
       "title": "Список заявлений в ГИБДД"
     }
   }, [_c('i', {
@@ -51803,6 +51805,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51818,7 +51836,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getList: function getList() {
             var _this = this;
 
-            var url = window.baseurl + 'gibddonline/list';
+            var url = '/gibddonline/list';
 
             axios.post(url, { user_id: 1 }).then(function (response) {
                 _this.items = response.data;
@@ -52109,8 +52127,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "modal fade bs-example-modal-lg",
     attrs: {
@@ -52126,24 +52142,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "modal-content"
-  }, [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._m(1), _vm._v(" "), _vm._l((_vm.items), function(item) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.description) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.offence_registered_at) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.transport_number) + "\n                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-3 clearfix"
+    }, [_vm._v("\n                            " + _vm._s(item.status) + "\n                        ")])])
+  })], 2), _vm._v(" "), _vm._m(2)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "modal-header"
   }, [_c('h4', {
     staticClass: "modal-title",
     attrs: {
       "id": "listGbddOnlineLabel"
     }
-  }, [_vm._v("Отправленные заявления в ГИБДД")])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_c('div', {
+  }, [_vm._v("Отправленные заявления в ГИБДД")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-sm-5 clearfix"
+    staticClass: "col-sm-3 clearfix"
   }, [_c('label', {
     staticClass: "input-title"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-7 clearfix"
-  })])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Описание нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Время фиксации нарушения")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Номер ТС")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3 clearfix"
+  }, [_c('label', {
+    staticClass: "input-title"
+  }, [_vm._v("Статус")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-warning",
@@ -52151,7 +52195,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "data-dismiss": "modal"
     }
-  }, [_vm._v("Закрыть окно")])])])])])])
+  }, [_vm._v("Закрыть окно")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
