@@ -7735,6 +7735,11 @@ button.btn {
   z-index: 1;
 }
 
+#map .ol-zoom {
+  top: 118px;
+  left: 9px;
+}
+
 #map .ol-control {
   background: none;
 }
@@ -7922,6 +7927,29 @@ button.btn {
   border: none;
   border-bottom: 1px solid;
   margin: 0 0 10px;
+}
+
+#positions {
+  position: fixed;
+  bottom: 9px;
+  left: 9px;
+  z-index: 5000;
+  padding: 10px;
+  color: #fcfcfe;
+  background: #8399c5;
+  z-index: 10;
+  border-radius: 2px;
+  -ms-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+#logo {
+  position: fixed;
+  top: 9px;
+  left: 9px;
+  border-radius: 2px;
+  -ms-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
 .notifications .notification-wrapper {

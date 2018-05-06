@@ -3,6 +3,7 @@
         <notifications></notifications>
         <map-component></map-component>
         <manager-component></manager-component>
+        <img src="images/logo-app.png" id="logo" />
     </div>
 </template>
 

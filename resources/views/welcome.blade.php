@@ -22,7 +22,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 
-    <title>Безопасные дороги</title>
+    <title>Зелёный свет</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     
 </head>

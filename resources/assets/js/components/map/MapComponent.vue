@@ -2,7 +2,7 @@
     <div>
         <ol-map :layersList="layersList" :elementsList="showElementsList" :mapSetting="mapSetting"></ol-map>
         <feature-information></feature-information>
-        <div style="position: absolute; bottom: 0px; right: 0px; z-index: 5000; padding: 10px; color: white;">Скорость {{speed}} км./ч. {{lat.toFixed(5)}}, {{lon.toFixed(5)}}</div>
+        <div id="positions"><i class="fa fa-dashboard"></i> {{speed}} км/ч <i class="fa fa-map-marker"></i> {{lat.toFixed(5)}} {{lon.toFixed(5)}}</div>
     </div>
 </template>
 
