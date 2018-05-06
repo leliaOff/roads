@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 class ActiveCitizenController extends Controller
 {
     public function create(Request $request){
-        return $request;
         try{
             $citizen = new ActiveCitizen();
             $citizen->type = $request->type;
@@ -24,6 +23,7 @@ class ActiveCitizenController extends Controller
     }
 
     public function list() {
+        dd(ActiveCitizen::all()->toArray());
         return ActiveCitizen::all();
     }
 
