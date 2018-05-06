@@ -1,10 +1,13 @@
 <template>
     <div>
         <ol-map :layersList="layersList" :elementsList="showElementsList" :mapSetting="mapSetting"></ol-map>
+        <feature-information></feature-information>
     </div>
 </template>
 
 <script>
+
+    import FeatureInformation from './FeatureInformation.vue';
 
     export default {
 
@@ -185,6 +188,10 @@
 
         mounted() {
             this.runGeolocation();
+        },
+
+        components: {
+            FeatureInformation: FeatureInformation,
         },
 
     }

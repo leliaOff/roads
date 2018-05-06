@@ -4,7 +4,8 @@ const state = {
     zoom:           11,         //Зум
     mode:           'default',  //Режим работы карты: default - обычный, draw - рисование
     feature:        { type: '', coordinates: false },
-    selectedLayers: []
+    selectedLayers: [],
+    featureInformation: false,
 };
 
 const mutations = {
@@ -38,6 +39,11 @@ const mutations = {
         if(i == -1) return;
         state.selectedLayers.splice(i, 1);
     },
+
+    /* Отобразить окно с описанием */
+    showInformation: (state, data) => {
+        state.featureInformation = Object.assign({}, data);
+    },
     
 };
 
@@ -66,6 +72,11 @@ const actions = {
     /* Снять выделение со слоя */
     unselectLayers: (context, payload) => {
         context.commit('unselectLayers', payload.layer);
+    },
+
+    /* Отобразить окно с описанием */
+    showInformation: (context, payload) => {
+        context.commit('showInformation', payload.data);
     },
 
 };

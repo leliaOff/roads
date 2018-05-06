@@ -16380,6 +16380,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (!element) return;
 
                     _this.selectedElement = element;
+
+                    //Окно с информацией
+                    if (properties.data != undefined) {
+                        _this.$store.dispatch('showInformation', { data: properties.data });
+                    }
                 });
             }
 
@@ -16660,12 +16665,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FeatureInformation_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FeatureInformation_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FeatureInformation_vue__);
 //
 //
 //
 //
 //
 //
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -16832,7 +16842,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.runGeolocation();
+    },
+
+
+    components: {
+        FeatureInformation: __WEBPACK_IMPORTED_MODULE_0__FeatureInformation_vue___default.a
     }
+
 });
 
 /***/ }),
@@ -17026,7 +17042,8 @@ var state = {
     zoom: 11, //Зум
     mode: 'default', //Режим работы карты: default - обычный, draw - рисование
     feature: { type: '', coordinates: false },
-    selectedLayers: []
+    selectedLayers: [],
+    featureInformation: false
 };
 
 var mutations = {
@@ -17059,6 +17076,11 @@ var mutations = {
         var i = state.selectedLayers.indexOf(layer);
         if (i == -1) return;
         state.selectedLayers.splice(i, 1);
+    },
+
+    /* Отобразить окно с описанием */
+    showInformation: function showInformation(state, data) {
+        state.featureInformation = Object.assign({}, data);
     }
 
 };
@@ -17088,6 +17110,11 @@ var actions = {
     /* Снять выделение со слоя */
     unselectLayers: function unselectLayers(context, payload) {
         context.commit('unselectLayers', payload.layer);
+    },
+
+    /* Отобразить окно с описанием */
+    showInformation: function showInformation(context, payload) {
+        context.commit('showInformation', payload.data);
     }
 
 };
@@ -48146,7 +48173,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "elementsList": _vm.showElementsList,
       "mapSetting": _vm.mapSetting
     }
-  })], 1)
+  }), _vm._v(" "), _c('feature-information')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -51643,6 +51670,229 @@ module.exports = function(module) {
 __webpack_require__(13);
 module.exports = __webpack_require__(14);
 
+
+/***/ }),
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+
+        return {
+            items: {},
+            aliases: {
+                'reason': 'Причина',
+                'region_code': 'Код региона',
+                'reg_code': 'Код региона',
+                'region_name': 'Регион',
+                'reg_name': 'Регион',
+                'repair_kind': 'Тип ремонта',
+                'road_code': 'Код дороги',
+                'road_name': 'Наименование дороги',
+                'road_type': 'Тип дороги',
+                'trouble_type': 'Тип проблемы',
+                'crash_type': 'Тип ДТП',
+                'crash_reason': 'Причина ДТП',
+                'crash_date': 'Дата ДТП',
+                'date': 'Дата происшествия',
+                'kind': 'Тип происшествия',
+                'performer': 'Подрядчик',
+                'description': 'Описание',
+                'work_started_at': 'Планируемая дата начала работ',
+                'work_finished_at': 'Планируемая дата окончания работ',
+                'work_actually_started_at': 'Фактическая дата начала работ',
+                'work_actually_finished_at': 'Фактическая дата окончания работ'
+            },
+            hidden: ['id', 'lat', 'lon', 'created_at', 'updated_at', 'start_lat', 'start_lon', 'end_lat', 'end_lon']
+        };
+    },
+
+
+    watch: {
+
+        '$store.state.map.featureInformation': function $storeStateMapFeatureInformation(data) {
+            this.items = data;
+            if (this.items == false) return;
+            $('#featureInformation').modal('show');
+        }
+
+    },
+
+    methods: {
+        close: function close() {
+            this.clean();
+        },
+        getTitle: function getTitle(alias) {
+            return this.aliases[alias] == undefined ? alias : this.aliases[alias];
+        },
+        isShow: function isShow(alias) {
+            return this.hidden.indexOf(alias) == -1 ? true : false;
+        },
+        clean: function clean() {}
+    }
+
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(89),
+  /* template */
+  __webpack_require__(91),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "c:\\OpenServer\\domains\\roads\\resources\\assets\\js\\components\\map\\FeatureInformation.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] FeatureInformation.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3b9015b8", Component.options)
+  } else {
+    hotAPI.reload("data-v-3b9015b8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "modal fade bs-example-modal-lg",
+    attrs: {
+      "id": "featureInformation",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "featureInformationLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-lg",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "modal-body"
+  }, _vm._l((_vm.items), function(item, i) {
+    return (item != '' && _vm.isShow(i)) ? _c('div', {
+      key: i,
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-6 clearfix"
+    }, [_c('label', {
+      staticClass: "input-title"
+    }, [_vm._v(_vm._s(_vm.getTitle(i)))])]), _vm._v(" "), (i == 'description') ? _c('div', {
+      staticClass: "col-sm-6 clearfix"
+    }, [_c('textarea', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.items[i]),
+        expression: "items[i]"
+      }],
+      attrs: {
+        "readonly": ""
+      },
+      domProps: {
+        "value": (_vm.items[i])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.$set(_vm.items, i, $event.target.value)
+        }
+      }
+    })]) : _c('div', {
+      staticClass: "col-sm-6 clearfix"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.items[i]),
+        expression: "items[i]"
+      }],
+      attrs: {
+        "type": "text",
+        "readonly": ""
+      },
+      domProps: {
+        "value": (_vm.items[i])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.$set(_vm.items, i, $event.target.value)
+        }
+      }
+    })])]) : _vm._e()
+  })), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    },
+    on: {
+      "click": _vm.close
+    }
+  }, [_vm._v("Закрыть окно")])])])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3b9015b8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

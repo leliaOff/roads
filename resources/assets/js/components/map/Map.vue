@@ -194,6 +194,11 @@
                         
                         this.selectedElement = element;
 
+                        //Окно с информацией
+                        if(properties.data != undefined) {
+                            this.$store.dispatch('showInformation', {data: properties.data});
+                        }
+
                     });
                     
                 }
