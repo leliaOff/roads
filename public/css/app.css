@@ -7767,8 +7767,11 @@ button.btn {
 }
 
 #manager .profile > div {
-  border-bottom: 1px solid #fcfcfe;
   padding: 10px;
+}
+
+#manager .profile > div.isLogin {
+  border-bottom: 1px solid #fcfcfe;
 }
 
 #manager .profile .profile-image {
@@ -7854,11 +7857,7 @@ button.btn {
   cursor: pointer;
 }
 
-#manager .actions {
-  text-align: center;
-}
-
-#manager .actions .login {
+#manager .login {
   width: 100px;
   font-size: 18px;
   padding: 5px;
@@ -7880,6 +7879,14 @@ button.btn {
 .scrollbar .vue-scrollbar__scrollbar-vertical .scrollbar,
 .scrollbar .vue-scrollbar__scrollbar-horizontal .scrollbar {
   background: #fcfcfe;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
 }
 
 #menu-show {

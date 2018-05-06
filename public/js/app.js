@@ -16028,18 +16028,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logout_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LayersList_vue__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LayersList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__LayersList_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ActiveCitizen_Index_vue__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ActiveCitizen_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ActiveCitizen_Index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__GbddOnline_Index_vue__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__GbddOnline_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__GbddOnline_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Profile_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Profile_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__LayersList_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__LayersList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__LayersList_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ActiveCitizen_Index_vue__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ActiveCitizen_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ActiveCitizen_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GbddOnline_Index_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GbddOnline_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__GbddOnline_Index_vue__);
 //
 //
 //
@@ -16065,10 +16061,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-
-
 
 
 
@@ -16095,12 +16087,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     components: {
-        LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a,
-        LogoutComponent: __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default.a,
-        ProfileComponent: __WEBPACK_IMPORTED_MODULE_2__Profile_vue___default.a,
-        LayersList: __WEBPACK_IMPORTED_MODULE_3__LayersList_vue___default.a,
-        ActiveCitizen: __WEBPACK_IMPORTED_MODULE_4__ActiveCitizen_Index_vue___default.a,
-        GbddOnline: __WEBPACK_IMPORTED_MODULE_5__GbddOnline_Index_vue___default.a
+        ProfileComponent: __WEBPACK_IMPORTED_MODULE_0__Profile_vue___default.a,
+        LayersList: __WEBPACK_IMPORTED_MODULE_1__LayersList_vue___default.a,
+        ActiveCitizen: __WEBPACK_IMPORTED_MODULE_2__ActiveCitizen_Index_vue___default.a,
+        GbddOnline: __WEBPACK_IMPORTED_MODULE_3__GbddOnline_Index_vue___default.a
     },
 
     mounted: function mounted() {
@@ -16118,6 +16108,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logout_vue__);
 //
 //
 //
@@ -16133,9 +16127,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['isLogin'],
+
     data: function data() {
         return {
             user: {
@@ -16152,6 +16161,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fullName: function fullName() {
             return this.user.lastname + ' ' + this.user.firstname + ' ' + this.user.middlename;
         }
+    },
+
+    components: {
+        LoginComponent: __WEBPACK_IMPORTED_MODULE_0__Login_vue___default.a,
+        LogoutComponent: __WEBPACK_IMPORTED_MODULE_1__Logout_vue___default.a
     }
 
 });
@@ -47766,8 +47780,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('button', {
-    staticClass: "login btn-light",
+  return _c('div', {
+    staticClass: "align-right"
+  }, [_c('button', {
+    staticClass: "logout btn-light",
     on: {
       "click": _vm.logout
     }
@@ -47954,7 +47970,13 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "profile"
-  }, [_c('div', [_c('div', {
+  }, [_c('div', {
+    class: {
+      isLogin: _vm.isLogin
+    }
+  }, [(_vm.isLogin) ? _c('div', {
+    staticClass: "profile-content"
+  }, [_c('div', {
     staticClass: "profile-image"
   }, [_c('img', {
     attrs: {
@@ -47970,7 +47992,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "profile-data-item"
   }, [_vm._v(_vm._s(_vm.user.firstname))]), _vm._v(" "), _c('div', {
     staticClass: "profile-data-item"
-  }, [_vm._v(_vm._s(_vm.user.middlename))])])])])
+  }, [_vm._v(_vm._s(_vm.user.middlename))])])]) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('logout-component', {
+    on: {
+      "logout": function($event) {
+        _vm.$emit('logout');
+      }
+    }
+  }) : _c('login-component', {
+    on: {
+      "login": function($event) {
+        _vm.$emit('login');
+      }
+    }
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -48010,21 +48044,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.showMenu = false
       }
     }
-  }, [_vm._v("свернуть меню")]), _vm._v(" "), (_vm.isLogin) ? _c('profile-component') : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('div', {
+  }, [_vm._v("свернуть меню")]), _vm._v(" "), _c('profile-component', {
+    attrs: {
+      "isLogin": _vm.isLogin
+    },
+    on: {
+      "logout": _vm.logout,
+      "login": _vm.login
+    }
+  }), _vm._v(" "), (_vm.isLogin) ? _c('div', {
     staticClass: "cell"
   }, [_c('active-citizen')], 1) : _vm._e(), (_vm.isLogin) ? _c('div', {
     staticClass: "cell"
-  }, [_c('gbdd-online')], 1) : _vm._e(), _vm._v(" "), (_vm.isLogin) ? _c('layers-list') : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "actions"
-  }, [(_vm.isLogin) ? _c('logout-component', {
-    on: {
-      "logout": _vm.logout
-    }
-  }) : _c('login-component', {
-    on: {
-      "login": _vm.login
-    }
-  })], 1)], 1)])], 1), _vm._v(" "), _c('button', {
+  }, [_c('gbdd-online')], 1) : _vm._e(), _vm._v(" "), _c('layers-list')], 1)])], 1), _vm._v(" "), _c('button', {
     attrs: {
       "id": "menu-show"
     },
@@ -48287,7 +48319,9 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('button', {
+  return _c('div', {
+    staticClass: "align-center"
+  }, [_c('button', {
     staticClass: "login btn-light",
     on: {
       "click": _vm.login

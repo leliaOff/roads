@@ -1,34 +1,30 @@
 <template>
     <div>
-            <transition name="right">
 
-                <vue-scrollbar class="scrollbar" ref="mainScrollbar" id="manager" v-show="showMenu">
-                    <div>
-                        <button id="menu-hide" @click="showMenu = false">свернуть меню</button>
+        <transition name="right">
 
-                        <profile-component v-if="isLogin"></profile-component>
+            <vue-scrollbar class="scrollbar" ref="mainScrollbar" id="manager" v-show="showMenu">
+                <div>
+                    <button id="menu-hide" @click="showMenu = false">свернуть меню</button>
 
-                        <div class="cell" v-if="isLogin"><active-citizen></active-citizen></div><!--
-                        --><div class="cell" v-if="isLogin"><gbdd-online></gbdd-online></div>
+                    <profile-component :isLogin="isLogin" v-on:logout="logout" v-on:login="login"></profile-component>
 
-                        <layers-list v-if="isLogin"></layers-list>
+                    <div class="cell" v-if="isLogin"><active-citizen></active-citizen></div><!--
+                    --><div class="cell" v-if="isLogin"><gbdd-online></gbdd-online></div>
 
-                        <div class="actions">
-                            <logout-component v-if="isLogin" v-on:logout="logout"></logout-component>
-                            <login-component v-else v-on:login="login"></login-component>
-                        </div>
-                    </div>
-                </vue-scrollbar>
-            </transition>
+                    <layers-list></layers-list>
+                    
+                </div>
+            </vue-scrollbar>
+        </transition>
 
         <button id="menu-show" @click="showMenu = true"><i class="fa fa-bars"></i></button>
+
     </div>
 </template>
 
 <script>
 
-    import Login    from './Login.vue';
-    import Logout   from './Logout.vue';
     import Profile  from './Profile.vue';
     import LayersList     from './LayersList.vue';
     import ActiveCitizen  from './ActiveCitizen/Index.vue';
@@ -56,8 +52,6 @@
         },
 
         components: {
-            LoginComponent      : Login,
-            LogoutComponent     : Logout,
             ProfileComponent    : Profile,
             LayersList          : LayersList,
             ActiveCitizen       : ActiveCitizen,

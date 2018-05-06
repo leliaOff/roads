@@ -156,8 +156,11 @@ button {
         @include box-sizing(border-box);
 
         & > div {
-            border-bottom: 1px solid $white;
             padding: 10px;
+
+            &.isLogin {
+                border-bottom: 1px solid $white;
+            }
         }
         
         .profile-image {
@@ -246,19 +249,11 @@ button {
         }
     }
 
-    .actions {
-        text-align: center;
-
-        .login {
-            width: 100px;
-            //position: absolute;
-            //bottom: 20px;
-            //left: 50%;
-            //margin: 0 0 0 -50px;
-            font-size: 18px;
-            padding: 5px;
-        }
-    }    
+    .login {
+        width: 100px;
+        font-size: 18px;
+        padding: 5px;
+    }  
 }
 
 .file-form {
@@ -283,6 +278,14 @@ button {
     .vue-scrollbar__scrollbar-horizontal .scrollbar {
         background: $white;
     }
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
 }
 
 #menu-show {
