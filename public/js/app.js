@@ -16520,7 +16520,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             feature.setProperties({
                 'layer_name': element.layer,
                 'id': element.id,
-                'type': element.type
+                'type': element.type,
+                'data': element.data
             });
 
             //Добавляем геоэлементы на слой
@@ -16685,29 +16686,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     style: { shape: { fill: { color: '#e03a1350' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 5 }, isLabel: false },
                     selectedStyle: { shape: { fill: { color: '#e03a1390' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 },
+                /* ЧП */
                 layer2: {
                     name: layerName[1],
-                    style: {
-                        fill: {
-                            color: '#f62496'
-                        },
-                        stroke: {
-                            color: '#f62496',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: '#f62496'
-                            },
-                            stroke: {
-                                color: '#f62496',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { shape: { fill: { color: '#f3853650' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 5 }, isLabel: false },
+                    selectedStyle: { shape: { fill: { color: '#f3853690' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 },
                 /* Ремонты дорог */
                 layer3: {
@@ -16744,26 +16727,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return elements;
         }
     },
-
-    created: function created() {
-
-        var self = this;
-
-        //Ремонт на дорогах
-        axios.get('./get_road_works').then(function (response) {
-
-            var layers = self.elementsList;
-            self.elementsList = layers.concat(response.data);
-        });
-
-        //Аварийность 
-        axios.get('./get_road_accidents').then(function (response) {
-
-            var layers = self.elementsList;
-            self.elementsList = layers.concat(response.data);
-        });
-    },
-
 
     watch: {
 
@@ -16842,6 +16805,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
+    created: function created() {
+
+        var self = this;
+
+        //Ремонт на дорогах
+        axios.get('./get_road_works').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+
+        //Аварийность 
+        axios.get('./get_road_accidents').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+
+        //ЧП 
+        axios.get('./get_road_emergencies').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+    },
     mounted: function mounted() {
         this.runGeolocation();
     }

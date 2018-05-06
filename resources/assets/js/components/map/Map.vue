@@ -334,6 +334,7 @@
                     'layer_name':   element.layer,
                     'id':           element.id,
                     'type':         element.type,
+                    'data':         element.data
                 });
 
                 //Добавляем геоэлементы на слой
