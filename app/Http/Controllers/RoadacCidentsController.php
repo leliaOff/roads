@@ -20,7 +20,8 @@ class RoadacCidentsController extends Controller
                 'coordinates' => $this->coordinates($data[$i]),
                 'type' => 'MultiPolygon',
                 'name' => $data[$i]['repair_kind'],
-                'layer' => 'layer3'
+                'layer' => 'layer3',
+                'data' => $data[$i]
             ];
         }
 
@@ -46,7 +47,8 @@ class RoadacCidentsController extends Controller
                 'coordinates' => [(float)$data[$i]['lon'],  (float)$data[$i]['lat']],
                 'type' => 'point',
                 'name' => $data[$i]['crash_type'],
-                'layer' => 'layer1'
+                'layer' => 'layer1',
+                'data' => $data[$i]
             ];
         }
         return $array;
@@ -61,7 +63,8 @@ class RoadacCidentsController extends Controller
                 'coordinates' => [(float)$data[$i]['lon'],  (float)$data[$i]['lat']],
                 'type' => 'point',
                 'name' => $data[$i]['description'],
-                'layer' => 'layer2'
+                'layer' => 'layer2',
+                'data' => $data[$i]
             ];
         }
         return $array;

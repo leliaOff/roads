@@ -15747,7 +15747,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
                 center: this.mapSetting == undefined || this.mapSetting.center == undefined ? [45.235, 54.2644] : this.mapSetting.center,
-                zoom: this.mapSetting == undefined || this.mapSetting.zoom == undefined ? 16 : this.mapSetting.zoom
+                zoom: this.mapSetting == undefined || this.mapSetting.zoom == undefined ? 12 : this.mapSetting.zoom
             };
 
             //Если не найден контейнер с картой
@@ -15783,6 +15783,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         /* Создание векторного слоя для рисования элементов */
         addVectorLayer: function addVectorLayer(layer) {
+            var _this = this;
 
             var source = new ol.source.Vector({});
 
@@ -15807,6 +15808,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.modify.layer = layer.name;
                     this.createInteractions(source, layer.modify);
                 }
+            } else {
+
+                var select = new ol.interaction.Select();
+                this.map.addInteraction(select);
+                select.on('select', function (e) {
+
+                    if (e.selected.length == 0) return;
+
+                    var properties = e.selected[0].getProperties();
+                    var element = _this.getElementById(properties.id);
+
+                    if (!element) return;
+
+                    _this.selectedElement = element;
+                });
             }
 
             this.map.addLayer(vectorLayer);
@@ -15847,12 +15863,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
 
-            if (title) {
+            if (title && style.isLabel) {
                 styleProperties.text = new ol.style.Text({
-                    font: '16px Calibri, sans-serif',
+                    font: '14px \'PT Sans\', sans-serif',
                     fill: new ol.style.Fill({
                         color: '#ffffff'
                     }),
+                    stroke: new ol.style.Stroke({
+                        color: '#333333',
+                        width: 2
+                    }),
+                    offsetY: -20,
                     text: title
                 });
             }
@@ -15941,7 +15962,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             feature.setProperties({
                 'layer_name': element.layer,
                 'id': element.id,
-                'type': element.type
+                'type': element.type,
+                'data': element.data
             });
 
             //Добавляем геоэлементы на слой
@@ -16052,6 +16074,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var style = this.layersList[newSelectedElement.layer].selectedStyle;
             style = this.createStyle(style, newSelectedElement.name);
             feature.setStyle(style);
+        },
+        getElementById: function getElementById(id) {
+            for (var i in this.elementsList) {
+                if (this.elementsList[i].id == id) {
+                    return this.elementsList[i];
+                }
+            }
+            return false;
         }
 
         /*
@@ -16093,77 +16123,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             /* Список слоев - меняется при изменении стиля */
             layersList: {
+                /* ДТП */
                 layer1: {
                     name: layerName[0],
-                    style: {
-                        fill: {
-                            color: '#24f636'
-                        },
-                        stroke: {
-                            color: '#24f636',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: '#24f636'
-                            },
-                            stroke: {
-                                color: '#24f636',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { shape: { fill: { color: '#e03a1350' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 5 }, isLabel: false },
+                    selectedStyle: { shape: { fill: { color: '#e03a1390' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 },
+                /* ЧП */
                 layer2: {
                     name: layerName[1],
-                    style: {
-                        fill: {
-                            color: '#f62496'
-                        },
-                        stroke: {
-                            color: '#f62496',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: '#f62496'
-                            },
-                            stroke: {
-                                color: '#f62496',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { shape: { fill: { color: '#f3853650' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 5 }, isLabel: false },
+                    selectedStyle: { shape: { fill: { color: '#f3853690' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 },
+                /* Ремонты дорог */
                 layer3: {
                     name: layerName[2],
-                    style: {
-                        fill: {
-                            color: 'rgba(255, 0, 0, 0.1)'
-                        },
-                        stroke: {
-                            color: 'rgb(255, 0, 0)',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: 'rgba(255, 0, 0, 0.1)'
-                            },
-                            stroke: {
-                                color: 'rgb(255, 0, 0)',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { fill: { color: '#39d64e50' }, stroke: { color: '#39d64e', width: 1 }, isLabel: false },
+                    selectedStyle: { fill: { color: '#39d64e80' }, stroke: { color: '#39d64e', width: 2 }, isLabel: true }
                 }
                 //TODO: народный контроль - layer4
             },
@@ -16175,22 +16151,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             speed: 0
         };
     },
-    created: function created() {
-        var self = this;
 
-        //Ремонт на дорогах
-        axios.get('./get_road_works').then(function (response) {
 
-            var layers = self.elementsList;
-            self.elementsList = layers.concat(response.data);
-        });
+    computed: {
 
-        //Аварийность 
-        axios.get('./get_road_accidents').then(function (response) {
+        /* Скрыть элементы слоя и показать */
+        showElementsList: function showElementsList() {
 
-            var layers = self.elementsList;
-            self.elementsList = layers.concat(response.data);
-        });
+            var elements = [];
+            var selectedLayers = this.$store.state.map.selectedLayers;
+
+            $.each(this.elementsList, function (i, item) {
+                if (selectedLayers.indexOf(item.layer) != -1) {
+                    elements.push(item);
+                }
+            });
+
+            return elements;
+        }
     },
 
     watch: {
@@ -16287,6 +16265,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
+    created: function created() {
+
+        var self = this;
+
+        //Ремонт на дорогах
+        axios.get('./get_road_works').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+
+        //Аварийность 
+        axios.get('./get_road_accidents').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+
+        //ЧП 
+        axios.get('./get_road_emergencies').then(function (response) {
+
+            var layers = self.elementsList;
+            self.elementsList = layers.concat(response.data);
+        });
+    },
     mounted: function mounted() {
         this.runGeolocation();
     }
@@ -16407,7 +16410,8 @@ var state = {
     map: false, //Сама карта
     zoom: 11, //Зум
     mode: 'default', //Режим работы карты: default - обычный, draw - рисование
-    feature: { type: '', coordinates: false }
+    feature: { type: '', coordinates: false },
+    selectedLayers: []
 };
 
 var mutations = {
@@ -16428,6 +16432,18 @@ var mutations = {
     /* Создаем новые feature */
     createFeature: function createFeature(state, data) {
         state.feature = { type: data.type, coordinates: data.coordinates };
+    },
+
+    /* Выбрать слой */
+    selectLayers: function selectLayers(state, layer) {
+        state.selectedLayers.push(layer);
+    },
+
+    /* Снять выделение со слоя */
+    unselectLayers: function unselectLayers(state, layer) {
+        var i = state.selectedLayers.indexOf(layer);
+        if (i == -1) return;
+        state.selectedLayers.splice(i, 1);
     }
 
 };
@@ -16447,6 +16463,16 @@ var actions = {
     /* Создаем новые feature */
     createFeature: function createFeature(context, payload) {
         context.commit('createFeature', payload.data);
+    },
+
+    /* Выбрать слой */
+    selectLayers: function selectLayers(context, payload) {
+        context.commit('selectLayers', payload.layer);
+    },
+
+    /* Снять выделение со слоя */
+    unselectLayers: function unselectLayers(context, payload) {
+        context.commit('unselectLayers', payload.layer);
     }
 
 };
@@ -46910,7 +46936,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('ol-map', {
     attrs: {
       "layersList": _vm.layersList,
-      "elementsList": _vm.elementsList,
+      "elementsList": _vm.showElementsList,
       "mapSetting": _vm.mapSetting
     }
   }), _vm._v(" "), _c('div', {
@@ -50676,12 +50702,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         toggleLayer: function toggleLayer(i) {
+
             this.layersList[i].checked = !this.layersList[i].checked;
+
+            if (this.layersList[i].checked) {
+                this.$store.dispatch('selectLayers', { layer: i });
+            } else {
+                this.$store.dispatch('unselectLayers', { layer: i });
+            }
         }
     },
 
-    computed: {}
-
+    mounted: function mounted() {
+        for (var i in this.layersList) {
+            this.$store.dispatch('selectLayers', { layer: i });
+        }
+    }
 });
 
 /***/ }),
@@ -51236,11 +51272,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row",
       attrs: {
         "title": layer.description
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggleLayer(i)
-        }
       }
     }, [_c('button', {
       class: {
@@ -51252,7 +51283,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }), _c('label', {
-      staticClass: "layer-title"
+      staticClass: "layer-title",
+      on: {
+        "click": function($event) {
+          _vm.toggleLayer(i)
+        }
+      }
     }, [_vm._v(_vm._s(layer.title))])])
   }))
 },staticRenderFns: []}

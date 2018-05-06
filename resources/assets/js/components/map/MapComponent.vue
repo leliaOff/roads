@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ol-map :layersList="layersList" :elementsList="elementsList" :mapSetting="mapSetting"></ol-map>
+        <ol-map :layersList="layersList" :elementsList="showElementsList" :mapSetting="mapSetting"></ol-map>
         <div style="position: absolute; bottom: 0px; right: 0px; z-index: 5000; padding: 10px; color: white;">Скорость {{speed}} км./ч.</div>
     </div>
 </template>
@@ -22,110 +22,54 @@
 
                 /* Список слоев - меняется при изменении стиля */
                 layersList: {
+                    /* ДТП */
                     layer1: {
                         name: layerName[0],
-                        style: {
-                            fill: {
-                                color: '#24f636'
-                            },
-                            stroke: {
-                                color: '#24f636',
-                                width: 1
-                            },
-                            shape: {
-                                fill: {
-                                    color: '#24f636'
-                                },
-                                stroke: {
-                                    color: '#24f636',
-                                    width: 1
-                                },
-                                points: 4,
-                                radius: 10,
-                                angle: 0
-                            }
-                        }
+                        style: { shape: { fill: { color: '#e03a1350' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 5, }, isLabel: false, },
+                        selectedStyle: { shape: { fill: { color: '#e03a1390' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 8, }, isLabel: true }
                     },
+                    /* ЧП */
                     layer2: {
                         name: layerName[1],
-                        style: {
-                            fill: {
-                                color: '#f62496'
-                            },
-                            stroke: {
-                                color: '#f62496',
-                                width: 1
-                            },
-                            shape: {
-                                fill: {
-                                    color: '#f62496'
-                                },
-                                stroke: {
-                                    color: '#f62496',
-                                    width: 1
-                                },
-                                points: 4,
-                                radius: 10,
-                                angle: 0
-                            }
-                        }
+                        style: { shape: { fill: { color: '#f3853650' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 5, }, isLabel: false, },
+                        selectedStyle: { shape: { fill: { color: '#f3853690' }, stroke: { color: '#f38536', width: 2 }, points: 66, radius: 8, }, isLabel: true }
                     },
+                    /* Ремонты дорог */
                     layer3: {
                         name: layerName[2],
-                        style: {
-                            fill: {
-                                color: 'rgba(255, 0, 0, 0.1)'
-                            },
-                            stroke: {
-                                color: 'rgb(255, 0, 0)',
-                                width: 1
-                            },
-                            shape: {
-                                fill: {
-                                    color: 'rgba(255, 0, 0, 0.1)'
-                                },
-                                stroke: {
-                                    color: 'rgb(255, 0, 0)',
-                                    width: 1
-                                },
-                                points: 4,
-                                radius: 10,
-                                angle: 0
-                            }
-                        }
+                        style: { fill: { color: '#39d64e50' }, stroke: { color: '#39d64e', width: 1 }, isLabel: false, },
+                        selectedStyle: { fill: { color: '#39d64e80' }, stroke: { color: '#39d64e', width: 2 }, isLabel: true, }
                     },
                     //TODO: народный контроль - layer4
                 }, 
 
                 /* Сами геоэлементы */
-                elementsList: [],
+                elementsList:       [],
 
                 mapSetting: {},
                 speed: 0,
             }
         },
 
-        created() {
-            let self = this;
+        computed: {
             
-            //Ремонт на дорогах
-            axios.get('./get_road_works')
-            .then(function (response) {
-                
-                let layers = self.elementsList;
-                self.elementsList = layers.concat(response.data);
+            /* Скрыть элементы слоя и показать */
+            showElementsList() {
 
-            });
-            
-            //Аварийность 
-            axios.get('./get_road_accidents')
-            .then(function (response) {
-             
-                let layers = self.elementsList;
-                self.elementsList = layers.concat(response.data);
+                let elements = [];
+                let selectedLayers = this.$store.state.map.selectedLayers;
 
-            });
+                $.each(this.elementsList, (i, item) => {
+                    if(selectedLayers.indexOf(item.layer) != -1) {
+                        elements.push(item);
+                    }
+                });
+
+                return elements;
+            }
+
         },
+
         watch: {
 
             '$store.state.map.mode': function(mode) {
@@ -136,7 +80,7 @@
                     this.selectMode();
                 }
 
-            }
+            },
 
         },
 
@@ -222,12 +166,42 @@
                         maximumAge: 60000}
                     );
                 }, 2000);
-            }
+            },
 
+        },
+
+        created() {
+            
+            let self = this;
+            
+            //Ремонт на дорогах
+            axios.get('./get_road_works').then(function (response) {
+                
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
+            });
+            
+            //Аварийность 
+            axios.get('./get_road_accidents').then(function (response) {
+             
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
+            });
+
+            //ЧП 
+            axios.get('./get_road_emergencies').then(function (response) {
+             
+                let layers = self.elementsList;
+                self.elementsList = layers.concat(response.data);
+
+            });
         },
 
         mounted() {
             this.runGeolocation();
-        }
+        },
+
     }
 </script>

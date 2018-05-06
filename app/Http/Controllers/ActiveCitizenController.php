@@ -20,7 +20,7 @@ class ActiveCitizenController extends Controller
         return $citizen;
     }
 
-    public function list(){
+    public function list() {
         return ActiveCitizen::all();
     }
 }
