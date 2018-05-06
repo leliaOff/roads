@@ -16295,7 +16295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var mapSetting = { // [78.104134, 65.970012] - ремонт дороги; [45.235, 54.2644] - авария
                 center: this.mapSetting == undefined || this.mapSetting.center == undefined ? [45.235, 54.2644] : this.mapSetting.center,
-                zoom: this.mapSetting == undefined || this.mapSetting.zoom == undefined ? 16 : this.mapSetting.zoom
+                zoom: this.mapSetting == undefined || this.mapSetting.zoom == undefined ? 12 : this.mapSetting.zoom
             };
 
             //Если не найден контейнер с картой
@@ -16331,6 +16331,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         /* Создание векторного слоя для рисования элементов */
         addVectorLayer: function addVectorLayer(layer) {
+            var _this = this;
 
             var source = new ol.source.Vector({});
 
@@ -16355,6 +16356,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.modify.layer = layer.name;
                     this.createInteractions(source, layer.modify);
                 }
+            } else {
+
+                var select = new ol.interaction.Select();
+                this.map.addInteraction(select);
+                select.on('select', function (e) {
+
+                    if (e.selected.length == 0) return;
+
+                    var properties = e.selected[0].getProperties();
+                    var element = _this.getElementById(properties.id);
+                    _this.selectedElement = element;
+                });
             }
 
             this.map.addLayer(vectorLayer);
@@ -16395,12 +16408,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
 
-            if (title) {
+            if (title && style.isLabel) {
                 styleProperties.text = new ol.style.Text({
-                    font: '16px Calibri, sans-serif',
+                    font: '14px \'PT Sans\', sans-serif',
                     fill: new ol.style.Fill({
                         color: '#ffffff'
                     }),
+                    stroke: new ol.style.Stroke({
+                        color: '#333333',
+                        width: 2
+                    }),
+                    offsetY: -20,
                     text: title
                 });
             }
@@ -16600,6 +16618,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var style = this.layersList[newSelectedElement.layer].selectedStyle;
             style = this.createStyle(style, newSelectedElement.name);
             feature.setStyle(style);
+        },
+        getElementById: function getElementById(id) {
+            for (var i in this.elementsList) {
+                if (this.elementsList[i].id == id) {
+                    return this.elementsList[i];
+                }
+            }
+            return false;
         }
 
         /*
@@ -16640,29 +16666,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             /* Список слоев - меняется при изменении стиля */
             layersList: {
+                /* ДТП */
                 layer1: {
                     name: layerName[0],
-                    style: {
-                        fill: {
-                            color: '#24f636'
-                        },
-                        stroke: {
-                            color: '#24f636',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: '#24f636'
-                            },
-                            stroke: {
-                                color: '#24f636',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { shape: { fill: { color: '#e03a1350' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 5 }, isLabel: false },
+                    selectedStyle: { shape: { fill: { color: '#e03a1390' }, stroke: { color: '#e03a13', width: 2 }, points: 66, radius: 8 }, isLabel: true }
                 },
                 layer2: {
                     name: layerName[1],
@@ -16688,29 +16696,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     }
                 },
+                /* Ремонты дорог */
                 layer3: {
                     name: layerName[2],
-                    style: {
-                        fill: {
-                            color: 'rgba(255, 0, 0, 0.1)'
-                        },
-                        stroke: {
-                            color: 'rgb(255, 0, 0)',
-                            width: 1
-                        },
-                        shape: {
-                            fill: {
-                                color: 'rgba(255, 0, 0, 0.1)'
-                            },
-                            stroke: {
-                                color: 'rgb(255, 0, 0)',
-                                width: 1
-                            },
-                            points: 4,
-                            radius: 10,
-                            angle: 0
-                        }
-                    }
+                    style: { fill: { color: '#39d64e50' }, stroke: { color: '#39d64e', width: 1 }, isLabel: false },
+                    selectedStyle: { fill: { color: '#39d64e80' }, stroke: { color: '#39d64e', width: 2 }, isLabel: true }
                 }
                 //TODO: народный контроль - layer4
             },
@@ -16719,6 +16709,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             elementsList: [],
 
             mapSetting: {}
+
         };
     },
     created: function created() {

@@ -7808,13 +7808,13 @@ button.btn {
   vertical-align: top;
   width: 50%;
   text-align: center;
-  padding: 20px 10px 0 5px;
+  padding: 20px 5px 0 20px;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 #manager .cell:nth-child(2n) {
-  padding: 20px 5px 0 10px;
+  padding: 20px 20px 0 5px;
 }
 
 #manager .action {
