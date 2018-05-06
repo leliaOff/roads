@@ -41,17 +41,35 @@
             
             toggleMapMode() {
 
-                this.$notify({
-                    title:  'Создание заметки о проблеме',
-                    text:   'Укажите метоположение проблемы на карте'
-                });
+                if(this.$store.state.map.mode == 'default') {
 
-                this.$store.dispatch('createFeature', {data: {
-                    type: 'activecitizen', 
-                    coordinates: false
-                }});
+                    this.$notify({
+                        title:  'Создание заметки о проблеме',
+                        text:   'Укажите метоположение проблемы на карте'
+                    });
 
-                this.$store.dispatch('togleMapMode', {mode: 'draw'});
+                    this.$store.dispatch('createFeature', {data: {
+                        type: 'activecitizen', 
+                        coordinates: false
+                    }});
+
+                    this.$store.dispatch('togleMapMode', {mode: 'draw'});
+
+                } else {
+                    
+                    this.$notify({
+                        title:  'Отмена действия',
+                        text:   'Вы отменили создание заметки о проблеме'
+                    });
+
+                    this.$store.dispatch('createFeature', {data: {
+                        type: '', 
+                        coordinates: false
+                    }});
+
+                    this.$store.dispatch('togleMapMode', {mode: 'default'});
+
+                }
             },
 
         },

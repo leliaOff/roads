@@ -41,17 +41,35 @@
             
             toggleMapMode() {
 
-                this.$notify({
-                    title:  'Создание заявления',
-                    text:   'Укажите место нарушения ПДД на карте'
-                });
+                if(this.$store.state.map.mode == 'default') {
 
-                this.$store.dispatch('createFeature', {data: {
-                    type: 'gbddonline', 
-                    coordinates: false
-                }});
+                    this.$notify({
+                        title:  'Создание заявления',
+                        text:   'Укажите место нарушения ПДД на карте'
+                    });
 
-                this.$store.dispatch('togleMapMode', {mode: 'draw'});
+                    this.$store.dispatch('createFeature', {data: {
+                        type: 'gbddonline', 
+                        coordinates: false
+                    }});
+
+                    this.$store.dispatch('togleMapMode', {mode: 'draw'});
+
+                } else {
+                    
+                    this.$notify({
+                        title:  'Отмена действия',
+                        text:   'Вы отменили создание заявления в ГИБДД'
+                    });
+
+                    this.$store.dispatch('createFeature', {data: {
+                        type: '', 
+                        coordinates: false
+                    }});
+
+                    this.$store.dispatch('togleMapMode', {mode: 'default'});
+
+                }
             },
 
         },

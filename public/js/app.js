@@ -15678,17 +15678,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         toggleMapMode: function toggleMapMode() {
 
-            this.$notify({
-                title: 'Создание заметки о проблеме',
-                text: 'Укажите метоположение проблемы на карте'
-            });
+            if (this.$store.state.map.mode == 'default') {
 
-            this.$store.dispatch('createFeature', { data: {
-                    type: 'activecitizen',
-                    coordinates: false
-                } });
+                this.$notify({
+                    title: 'Создание заметки о проблеме',
+                    text: 'Укажите метоположение проблемы на карте'
+                });
 
-            this.$store.dispatch('togleMapMode', { mode: 'draw' });
+                this.$store.dispatch('createFeature', { data: {
+                        type: 'activecitizen',
+                        coordinates: false
+                    } });
+
+                this.$store.dispatch('togleMapMode', { mode: 'draw' });
+            } else {
+
+                this.$notify({
+                    title: 'Отмена действия',
+                    text: 'Вы отменили создание заметки о проблеме'
+                });
+
+                this.$store.dispatch('createFeature', { data: {
+                        type: '',
+                        coordinates: false
+                    } });
+
+                this.$store.dispatch('togleMapMode', { mode: 'default' });
+            }
         }
     },
 
@@ -15899,17 +15915,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         toggleMapMode: function toggleMapMode() {
 
-            this.$notify({
-                title: 'Создание заявления',
-                text: 'Укажите место нарушения ПДД на карте'
-            });
+            if (this.$store.state.map.mode == 'default') {
 
-            this.$store.dispatch('createFeature', { data: {
-                    type: 'gbddonline',
-                    coordinates: false
-                } });
+                this.$notify({
+                    title: 'Создание заявления',
+                    text: 'Укажите место нарушения ПДД на карте'
+                });
 
-            this.$store.dispatch('togleMapMode', { mode: 'draw' });
+                this.$store.dispatch('createFeature', { data: {
+                        type: 'gbddonline',
+                        coordinates: false
+                    } });
+
+                this.$store.dispatch('togleMapMode', { mode: 'draw' });
+            } else {
+
+                this.$notify({
+                    title: 'Отмена действия',
+                    text: 'Вы отменили создание заявления в ГИБДД'
+                });
+
+                this.$store.dispatch('createFeature', { data: {
+                        type: '',
+                        coordinates: false
+                    } });
+
+                this.$store.dispatch('togleMapMode', { mode: 'default' });
+            }
         }
     },
 
